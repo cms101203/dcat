@@ -13,5 +13,12 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
-
+    //分类管理
+    $router->resource('/industry', AdminIndustryController::class);
+    //客户管理
+    $router->resource('/client', ClientDetailController::class);
+    //客户管理
+    $router->resource('/client', ClientDetailController::class);
+    //汽车管理
+    $router->resource('/cars', CarsController::class);
 });
