@@ -10,7 +10,9 @@ return [
         'car_spot_num' => '车辆识别号',
         'car_img' => '车辆图片',
         'op_id' => '操作人',
-        'inspection_at'=>'检车到期日'
+        'inspection_at'=>'检车到期日',
+        'hinsure_at'=>'交强险到期日',
+        'binsure_at'=>'商业险到期日',
     ],
     'options' => [
     ],

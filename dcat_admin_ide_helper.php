@@ -42,9 +42,15 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection prove_img
      * @property Grid\Column|Collection car_type
      * @property Grid\Column|Collection car_num
+     * @property Grid\Column|Collection inspection_at
+     * @property Grid\Column|Collection hinsure_at
+     * @property Grid\Column|Collection binsure_at
      * @property Grid\Column|Collection car_engine_num
      * @property Grid\Column|Collection car_spot_num
      * @property Grid\Column|Collection car_img
+     * @property Grid\Column|Collection type
+     * @property Grid\Column|Collection by_at
+     * @property Grid\Column|Collection car_mileage
      * @property Grid\Column|Collection op_id
      * @property Grid\Column|Collection parent_id
      * @property Grid\Column|Collection order
@@ -60,6 +66,12 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection role_id
      * @property Grid\Column|Collection password
      * @property Grid\Column|Collection remember_token
+     * @property Grid\Column|Collection by_mileage
+     * @property Grid\Column|Collection pd_mileage
+     * @property Grid\Column|Collection cly_mileage
+     * @property Grid\Column|Collection by_status
+     * @property Grid\Column|Collection pd_status
+     * @property Grid\Column|Collection cly_status
      * @property Grid\Column|Collection connection
      * @property Grid\Column|Collection queue
      * @property Grid\Column|Collection payload
@@ -112,9 +124,15 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection prove_img(string $label = null)
      * @method Grid\Column|Collection car_type(string $label = null)
      * @method Grid\Column|Collection car_num(string $label = null)
+     * @method Grid\Column|Collection inspection_at(string $label = null)
+     * @method Grid\Column|Collection hinsure_at(string $label = null)
+     * @method Grid\Column|Collection binsure_at(string $label = null)
      * @method Grid\Column|Collection car_engine_num(string $label = null)
      * @method Grid\Column|Collection car_spot_num(string $label = null)
      * @method Grid\Column|Collection car_img(string $label = null)
+     * @method Grid\Column|Collection type(string $label = null)
+     * @method Grid\Column|Collection by_at(string $label = null)
+     * @method Grid\Column|Collection car_mileage(string $label = null)
      * @method Grid\Column|Collection op_id(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
      * @method Grid\Column|Collection order(string $label = null)
@@ -130,6 +148,12 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection role_id(string $label = null)
      * @method Grid\Column|Collection password(string $label = null)
      * @method Grid\Column|Collection remember_token(string $label = null)
+     * @method Grid\Column|Collection by_mileage(string $label = null)
+     * @method Grid\Column|Collection pd_mileage(string $label = null)
+     * @method Grid\Column|Collection cly_mileage(string $label = null)
+     * @method Grid\Column|Collection by_status(string $label = null)
+     * @method Grid\Column|Collection pd_status(string $label = null)
+     * @method Grid\Column|Collection cly_status(string $label = null)
      * @method Grid\Column|Collection connection(string $label = null)
      * @method Grid\Column|Collection queue(string $label = null)
      * @method Grid\Column|Collection payload(string $label = null)
@@ -187,9 +211,15 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection prove_img
      * @property Show\Field|Collection car_type
      * @property Show\Field|Collection car_num
+     * @property Show\Field|Collection inspection_at
+     * @property Show\Field|Collection hinsure_at
+     * @property Show\Field|Collection binsure_at
      * @property Show\Field|Collection car_engine_num
      * @property Show\Field|Collection car_spot_num
      * @property Show\Field|Collection car_img
+     * @property Show\Field|Collection type
+     * @property Show\Field|Collection by_at
+     * @property Show\Field|Collection car_mileage
      * @property Show\Field|Collection op_id
      * @property Show\Field|Collection parent_id
      * @property Show\Field|Collection order
@@ -205,6 +235,12 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection role_id
      * @property Show\Field|Collection password
      * @property Show\Field|Collection remember_token
+     * @property Show\Field|Collection by_mileage
+     * @property Show\Field|Collection pd_mileage
+     * @property Show\Field|Collection cly_mileage
+     * @property Show\Field|Collection by_status
+     * @property Show\Field|Collection pd_status
+     * @property Show\Field|Collection cly_status
      * @property Show\Field|Collection connection
      * @property Show\Field|Collection queue
      * @property Show\Field|Collection payload
@@ -257,9 +293,15 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection prove_img(string $label = null)
      * @method Show\Field|Collection car_type(string $label = null)
      * @method Show\Field|Collection car_num(string $label = null)
+     * @method Show\Field|Collection inspection_at(string $label = null)
+     * @method Show\Field|Collection hinsure_at(string $label = null)
+     * @method Show\Field|Collection binsure_at(string $label = null)
      * @method Show\Field|Collection car_engine_num(string $label = null)
      * @method Show\Field|Collection car_spot_num(string $label = null)
      * @method Show\Field|Collection car_img(string $label = null)
+     * @method Show\Field|Collection type(string $label = null)
+     * @method Show\Field|Collection by_at(string $label = null)
+     * @method Show\Field|Collection car_mileage(string $label = null)
      * @method Show\Field|Collection op_id(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
      * @method Show\Field|Collection order(string $label = null)
@@ -275,6 +317,12 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection role_id(string $label = null)
      * @method Show\Field|Collection password(string $label = null)
      * @method Show\Field|Collection remember_token(string $label = null)
+     * @method Show\Field|Collection by_mileage(string $label = null)
+     * @method Show\Field|Collection pd_mileage(string $label = null)
+     * @method Show\Field|Collection cly_mileage(string $label = null)
+     * @method Show\Field|Collection by_status(string $label = null)
+     * @method Show\Field|Collection pd_status(string $label = null)
+     * @method Show\Field|Collection cly_status(string $label = null)
      * @method Show\Field|Collection connection(string $label = null)
      * @method Show\Field|Collection queue(string $label = null)
      * @method Show\Field|Collection payload(string $label = null)
