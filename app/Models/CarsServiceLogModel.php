@@ -6,12 +6,12 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class CarsModel extends BaseModel
+class CarsServiceLogModel extends Model
 {
 	use HasDateTimeFormatter;
     use SoftDeletes;
 
-    protected $table = 'cars';
+    protected $table = 'cars_service_log';
 
     /**
      * Get options for Select field in form.
@@ -27,5 +27,4 @@ class CarsModel extends BaseModel
 
         return collect($options)->all();
     }
-
 }

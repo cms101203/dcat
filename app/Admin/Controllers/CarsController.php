@@ -6,11 +6,13 @@ use App\Admin\Repositories\Cars;
 use App\Models\AdminIndustry;
 use App\Models\CarsMaintainLogForm;
 use App\Models\CarsMaintainLogModel;
+use App\Models\CarsServiceLogModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Widgets\Table;
 
 class CarsController extends AdminController
 {
@@ -52,18 +54,40 @@ class CarsController extends AdminController
             $grid->car_spot_num;
             $grid->created_at;
             $grid->updated_at->sortable();
-            $grid->column('carsmain','增加保养记录')->display(function ($item)use ($grid){
-                return "<span class='create-form' data-url='carsmaintainlog/create?id={$this->id}' title='新增保养记录'><i class='fa fa-wrench'></i></span>";
+            $grid->column('carsmain','保养记录')->display(function ($item)use ($grid){
+                return "<span class='create-form' data-url='carsmaintainlog/create?id={$this->id}' title='新增保养记录'><i class='fa  fa-cogs'></i></span>";
             })->expand(function ($model){
-                $bylist = CarsMaintainLogModel::where('cars_id',$this->id)->get(['type','by_at','car_mileage'])->toArray();
-                collect()
+                $byarr = [];
+                $bylist = CarsMaintainLogModel::where('cars_id',$this->id)->get(['type','by_at','car_mileage']);
+                if ($bylist){
+                    foreach ($bylist as $k=>$v){
+                        $bytype = AdminIndustry::where('id',$v['type'])->first();
+                        $byarr[$k]['by_at'] = $v['by_at'] ;
+                        $byarr[$k]['car_mileage'] = $v['car_mileage']."/Km" ;
+                        $byarr[$k]['type_name'] = empty($bytype) ? "--" : $bytype['title'] ;
+                    }
+                }
+                return new Table(['保养日期','保养时里程','保养类型'],$byarr);
+            });
+            $grid->column('carservice','维修记录')->display(function($item)use($grid){
+                return "<span class='create-service-form' data-url='carservicelog/create?id={$this->id}' title='新增维修记录'><i class='fa fa-wrench'></i></span>";
+            })->expand(function ($model){
+                $wxlist = CarsServiceLogModel::where('cars_id',$this->id)->get(['service_at','service_moeny','remark'])->toArray();
 
+                return new Table(['维修日期','维修花费','备注'],$wxlist);
             });
             Form::dialog('新增保养')
                 ->click('.create-form') // 绑定点击按钮
                 ->url('carsmaintainlog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
-                ->height('400px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
+
+            Form::dialog('新增维修')
+                ->click('.create-service-form') // 绑定点击按钮
+                ->url('carservicelog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('500px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
@@ -73,16 +97,6 @@ class CarsController extends AdminController
                 $filter->between('created_at')->datetime();
 
             });
-//            Admin::html("<input id");
-            Admin::script(
-                <<<JS
-          $(document).ready(function(){
-              $('.type').change(function() {
-                console.log("ddd");
-              });
-          });
-JS
-            );
         });
     }
 

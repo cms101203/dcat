@@ -21,6 +21,8 @@ Route::group([
     $router->resource('/client', ClientDetailController::class);
     //汽车管理
     $router->resource('/cars', CarsController::class);
-    //汽车管理
+    //汽车保养日志
     $router->resource('/carsmaintainlog', CarsMaintainLogController::class);
+    //汽车维修日志
+    $router->resource('/carservicelog', CarsServiceLogController::class);
 });
