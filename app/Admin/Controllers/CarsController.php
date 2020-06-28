@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Repositories\Cars;
 use App\Models\AdminIndustry;
 use App\Models\CarsMaintainLogForm;
+use App\Models\CarsMaintainLogModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -52,13 +53,17 @@ class CarsController extends AdminController
             $grid->created_at;
             $grid->updated_at->sortable();
             $grid->column('carsmain','增加保养记录')->display(function ($item)use ($grid){
-                return "<span class='create-form' data-url='carsmaintainlog/create?id={$this->id}'> 添加 </span>";
+                return "<span class='create-form' data-url='carsmaintainlog/create?id={$this->id}' title='新增保养记录'><i class='fa fa-wrench'></i></span>";
+            })->expand(function ($model){
+                $bylist = CarsMaintainLogModel::where('cars_id',$this->id)->get(['type','by_at','car_mileage'])->toArray();
+                collect()
+
             });
             Form::dialog('新增保养')
                 ->click('.create-form') // 绑定点击按钮
                 ->url('carsmaintainlog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
-                ->height('650px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->height('400px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
