@@ -76,7 +76,9 @@ class CarsServiceLogController extends AdminController
         return Form::make(new CarsServiceLog(), function (Form $form) use($id) {
             $form->display('id');
             $form->date('service_at')->required();
-            $form->currency('service_moeny')->symbol("元");
+            $form->currency('service_moeny')->symbol("元")->saving(function ($v){
+                return str_replace(',','',$v);
+            });
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
             $form->hidden('cars_id')->default($id);
