@@ -25,4 +25,8 @@ Route::group([
     $router->resource('/carsmaintainlog', CarsMaintainLogController::class);
     //汽车维修日志
     $router->resource('/carservicelog', CarsServiceLogController::class);
+    //汽车保险日志
+    $router->resource('/carsinsurancelog', CarInsuranceLogController::class);
+    //司机管理
+    $router->resource('/drivers', DriverDetailController::class);
 });

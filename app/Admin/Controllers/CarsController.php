@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\Cars;
 use App\Models\AdminIndustry;
+use App\Models\CarInsuranceLogModel;
 use App\Models\CarsMaintainLogForm;
 use App\Models\CarsMaintainLogModel;
 use App\Models\CarsServiceLogModel;
@@ -27,6 +28,7 @@ class CarsController extends AdminController
     {
         return Grid::make(new Cars(), function (Grid $grid) {
             $grid->id->sortable();
+            $grid->column('car_status','车辆状态')->using([0=>'空闲中',1=>'租赁中',2=>'维修中']);
             $grid->car_type;
             $grid->car_num;
             $grid->inspection_at->display(function ($item){
@@ -76,6 +78,24 @@ class CarsController extends AdminController
 
                 return new Table(['维修日期','维修花费','备注'],$wxlist);
             });
+            $grid->column('carsinsurance','保险记录')->display(function ($item)use ($grid){
+                return "<span class='create-insurance-form' data-url='carsinsurancelog/create?id={$this->id}' title='新增保险记录'><i class='feather icon-alert-triangle'></i></span>";
+            })->expand(function ($model){
+                $byarr = [];
+                $bylist = CarInsuranceLogModel::where('cars_id',$this->id)->get(['type','pay_at','start_at','end_at','pay_money','remark'])->toArray();
+                if ($bylist){
+                    foreach($bylist as $k=>$v){
+                        $bytype = AdminIndustry::where('id',$v['type'])->first();
+                        $byarr[$k]['type'] = empty($bytype) ? "--" : $bytype['title'] ;
+                        $byarr[$k]['pay_at'] = $v['pay_at'];
+                        $byarr[$k]['datetime'] = $v['start_at']." ~ ".$v['end_at'];
+                        $byarr[$k]['pay_money'] = $v['pay_money']."/元" ;
+                        $byarr[$k]['remark'] = $v['remark'];
+                    }
+
+                    return new Table(['保险类型','缴纳时间','有效期','缴纳金额','备注'],$byarr);
+                }
+            });
             Form::dialog('新增保养')
                 ->click('.create-form') // 绑定点击按钮
                 ->url('carsmaintainlog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
@@ -89,10 +109,19 @@ class CarsController extends AdminController
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
                 ->height('500px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
+
+            Form::dialog('新增保险缴纳记录')
+                ->click('.create-insurance-form') // 绑定点击按钮
+                ->url('carsinsurancelog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('500px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('car_type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']));
                 $filter->equal('car_num');
+                $filter->equal('car_status','车辆状态')->select([0=>'空闲中',1=>'租赁中',2=>'维修中']);
                 $filter->between('inspection_at')->date();
                 $filter->between('created_at')->datetime();
 

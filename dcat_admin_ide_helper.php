@@ -51,12 +51,20 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection type
      * @property Grid\Column|Collection by_at
      * @property Grid\Column|Collection car_mileage
+     * @property Grid\Column|Collection remark
      * @property Grid\Column|Collection op_id
+     * @property Grid\Column|Collection service_at
+     * @property Grid\Column|Collection service_moeny
+     * @property Grid\Column|Collection pay_at
+     * @property Grid\Column|Collection pay_money
+     * @property Grid\Column|Collection cars_id
+     * @property Grid\Column|Collection mobile
+     * @property Grid\Column|Collection photo_img
+     * @property Grid\Column|Collection driver_status
      * @property Grid\Column|Collection parent_id
      * @property Grid\Column|Collection order
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
-     * @property Grid\Column|Collection remark
      * @property Grid\Column|Collection deleted_at
      * @property Grid\Column|Collection user_id
      * @property Grid\Column|Collection permission_id
@@ -72,6 +80,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection by_status
      * @property Grid\Column|Collection pd_status
      * @property Grid\Column|Collection cly_status
+     * @property Grid\Column|Collection car_status
+     * @property Grid\Column|Collection start_at
+     * @property Grid\Column|Collection end_at
      * @property Grid\Column|Collection connection
      * @property Grid\Column|Collection queue
      * @property Grid\Column|Collection payload
@@ -133,12 +144,20 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection type(string $label = null)
      * @method Grid\Column|Collection by_at(string $label = null)
      * @method Grid\Column|Collection car_mileage(string $label = null)
+     * @method Grid\Column|Collection remark(string $label = null)
      * @method Grid\Column|Collection op_id(string $label = null)
+     * @method Grid\Column|Collection service_at(string $label = null)
+     * @method Grid\Column|Collection service_moeny(string $label = null)
+     * @method Grid\Column|Collection pay_at(string $label = null)
+     * @method Grid\Column|Collection pay_money(string $label = null)
+     * @method Grid\Column|Collection cars_id(string $label = null)
+     * @method Grid\Column|Collection mobile(string $label = null)
+     * @method Grid\Column|Collection photo_img(string $label = null)
+     * @method Grid\Column|Collection driver_status(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
      * @method Grid\Column|Collection order(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
-     * @method Grid\Column|Collection remark(string $label = null)
      * @method Grid\Column|Collection deleted_at(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
      * @method Grid\Column|Collection permission_id(string $label = null)
@@ -154,6 +173,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection by_status(string $label = null)
      * @method Grid\Column|Collection pd_status(string $label = null)
      * @method Grid\Column|Collection cly_status(string $label = null)
+     * @method Grid\Column|Collection car_status(string $label = null)
+     * @method Grid\Column|Collection start_at(string $label = null)
+     * @method Grid\Column|Collection end_at(string $label = null)
      * @method Grid\Column|Collection connection(string $label = null)
      * @method Grid\Column|Collection queue(string $label = null)
      * @method Grid\Column|Collection payload(string $label = null)
@@ -220,12 +242,20 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection type
      * @property Show\Field|Collection by_at
      * @property Show\Field|Collection car_mileage
+     * @property Show\Field|Collection remark
      * @property Show\Field|Collection op_id
+     * @property Show\Field|Collection service_at
+     * @property Show\Field|Collection service_moeny
+     * @property Show\Field|Collection pay_at
+     * @property Show\Field|Collection pay_money
+     * @property Show\Field|Collection cars_id
+     * @property Show\Field|Collection mobile
+     * @property Show\Field|Collection photo_img
+     * @property Show\Field|Collection driver_status
      * @property Show\Field|Collection parent_id
      * @property Show\Field|Collection order
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
-     * @property Show\Field|Collection remark
      * @property Show\Field|Collection deleted_at
      * @property Show\Field|Collection user_id
      * @property Show\Field|Collection permission_id
@@ -241,6 +271,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection by_status
      * @property Show\Field|Collection pd_status
      * @property Show\Field|Collection cly_status
+     * @property Show\Field|Collection car_status
+     * @property Show\Field|Collection start_at
+     * @property Show\Field|Collection end_at
      * @property Show\Field|Collection connection
      * @property Show\Field|Collection queue
      * @property Show\Field|Collection payload
@@ -302,12 +335,20 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection type(string $label = null)
      * @method Show\Field|Collection by_at(string $label = null)
      * @method Show\Field|Collection car_mileage(string $label = null)
+     * @method Show\Field|Collection remark(string $label = null)
      * @method Show\Field|Collection op_id(string $label = null)
+     * @method Show\Field|Collection service_at(string $label = null)
+     * @method Show\Field|Collection service_moeny(string $label = null)
+     * @method Show\Field|Collection pay_at(string $label = null)
+     * @method Show\Field|Collection pay_money(string $label = null)
+     * @method Show\Field|Collection cars_id(string $label = null)
+     * @method Show\Field|Collection mobile(string $label = null)
+     * @method Show\Field|Collection photo_img(string $label = null)
+     * @method Show\Field|Collection driver_status(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
      * @method Show\Field|Collection order(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
-     * @method Show\Field|Collection remark(string $label = null)
      * @method Show\Field|Collection deleted_at(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
      * @method Show\Field|Collection permission_id(string $label = null)
@@ -323,6 +364,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection by_status(string $label = null)
      * @method Show\Field|Collection pd_status(string $label = null)
      * @method Show\Field|Collection cly_status(string $label = null)
+     * @method Show\Field|Collection car_status(string $label = null)
+     * @method Show\Field|Collection start_at(string $label = null)
+     * @method Show\Field|Collection end_at(string $label = null)
      * @method Show\Field|Collection connection(string $label = null)
      * @method Show\Field|Collection queue(string $label = null)
      * @method Show\Field|Collection payload(string $label = null)
