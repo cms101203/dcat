@@ -5,10 +5,10 @@ return [
     ],
     'fields' => [
         'rent_num' => '租赁单号',
-        'client_id' => '客户ID',
+        'client_id' => '客户',
         'mobile' => '联系方式',
-        'staff_id' => '相关司机',
-        'current_mileage' => '当前历程',
+        'staff_id' => '司机',
+        'current_mileage' => '当前里程',
         'car_type' => '汽车类型',
         'car_id' => '选择车辆',
         'rent_type' => '租赁方式',

@@ -53,9 +53,9 @@ class CarsController extends AdminController
                     return $item;
                 }
             });
-            $grid->car_engine_num;
-            $grid->car_spot_num;
-            $grid->created_at;
+            $grid->car_engine_num->responsive(0);;
+            $grid->car_spot_num->responsive(0);;
+            $grid->created_at->responsive(0);;
             $grid->updated_at->sortable();
             $grid->column('carsmain','保养记录')->display(function ($item)use ($grid){
                 return "<span class='create-form' data-url='carsmaintainlog/create?id={$this->id}' title='新增保养记录'><i class='fa  fa-cogs'></i></span>";
@@ -252,11 +252,12 @@ HTML
 
     protected function getcars(){
         $q = intval(request()->get('q'));
-        $list = CarsModel::where('car_type',$q)->where('car_status',0)->get(['id','car_num'])->toArray();
+        $list = CarsModel::where('car_type',$q)->get(['id','car_num'])->toArray();
         $data = [];
         if ($list){
             foreach ($list as $k=>$v){
-                $data[$v['id']] = $v['car_num'];
+                $data[$k]['id'] = $v['id'];
+                $data[$k]['text'] = $v['car_num'];
             }
         }
         return $data;
