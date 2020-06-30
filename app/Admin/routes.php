@@ -28,5 +28,10 @@ Route::group([
     //汽车保险日志
     $router->resource('/carsinsurancelog', CarInsuranceLogController::class);
     //司机管理
-    $router->resource('/drivers', DriverDetailController::class);
+    $router->resource('/staffs', DriverDetailController::class);
+    //工资管理
+    $router->resource('/staffwage', DriverWageController::class);
+    //请假管理
+    $router->resource('/staffleave', StaffLeaveController::class);
+
 });

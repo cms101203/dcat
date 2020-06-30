@@ -6,12 +6,26 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class DriverDetailModel extends Model
+class DriverDetailModel extends BaseModel
 {
 	use HasDateTimeFormatter;
     use SoftDeletes;
 
-    protected $table = 'driver_details';
-    
+    protected $table = 'staff_details';
+
+    /**
+     * Get options for Select field in form.
+     *
+     * @param \Closure|null $closure
+     *
+     * @return array
+     */
+    public static function selectOptions(\Closure $closure = null)
+    {
+
+        $options = (new static())->withQuery($closure)->buildSelectOptions();
+
+        return collect($options)->all();
+    }
 
 }
