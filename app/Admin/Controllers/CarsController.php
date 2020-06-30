@@ -7,6 +7,7 @@ use App\Models\AdminIndustry;
 use App\Models\CarInsuranceLogModel;
 use App\Models\CarsMaintainLogForm;
 use App\Models\CarsMaintainLogModel;
+use App\Models\CarsModel;
 use App\Models\CarsServiceLogModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -181,6 +182,7 @@ class CarsController extends AdminController
         return Form::make(new Cars(), function (Form $form) {
             $form->display('id');
             $form->select('car_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']))->required();
+            $form->select('cp_id')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'10']))->required();
             $form->text('car_num')->required();
             $form->date('inspection_at');
             $form->date('hinsure_at');
@@ -246,5 +248,17 @@ HTML
 
             Admin::css('/vendors/dcat-admin/carnum/js/carnum.css');
         });
+    }
+
+    protected function getcars(){
+        $q = intval(request()->get('q'));
+        $list = CarsModel::where('car_type',$q)->where('car_status',0)->get(['id','car_num'])->toArray();
+        $data = [];
+        if ($list){
+            foreach ($list as $k=>$v){
+                $data[$v['id']] = $v['car_num'];
+            }
+        }
+        return $data;
     }
 }

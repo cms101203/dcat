@@ -18,8 +18,10 @@ Route::group([
     //客户管理
     $router->resource('/client', ClientDetailController::class);
     //客户管理
+    $router->any('/getclient', 'ClientDetailController@getclient')->name('admin.client.getclient');
     $router->resource('/client', ClientDetailController::class);
     //汽车管理
+    $router->any('/getcars', 'CarsController@getcars')->name('admin.cars.getcars');
     $router->resource('/cars', CarsController::class);
     //汽车保养日志
     $router->resource('/carsmaintainlog', CarsMaintainLogController::class);
@@ -33,5 +35,7 @@ Route::group([
     $router->resource('/staffwage', DriverWageController::class);
     //请假管理
     $router->resource('/staffleave', StaffLeaveController::class);
+    //请假管理
+    $router->resource('/rentcars', RentCarController::class);
 
 });

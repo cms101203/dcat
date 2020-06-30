@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\ClientDetail;
+use App\Models\ClientDetailModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -95,5 +96,19 @@ class ClientDetailController extends AdminController
             $form->display('updated_at');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
         });
+    }
+
+    protected function getclient(){
+        $id = intval(request()->get('id'));
+        if ($id){
+            $detail = ClientDetailModel::where('id',$id)->first();
+            if ($detail){
+                return json_encode(['status'=>1,'data'=>['name'=>$detail['client_name'],'mobile'=>$detail['client_mobile']]]);
+            }else{
+                return json_encode(['status'=>0,'msg'=>'data is no exit!']);
+            }
+        }else{
+            return json_encode(['status'=>0,'msg'=>'data is no exit!']);
+        }
     }
 }

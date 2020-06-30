@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2020-06-29 19:53:48
+-- 生成日期： 2020-06-30 19:24:23
 -- 服务器版本： 5.7.28-log
 -- PHP 版本： 7.2.24
 
@@ -121,7 +121,9 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `c
 (17, 0, 15, '员工管理', 'fa-user-secret', NULL, '2020-06-28 08:01:29', '2020-06-29 01:11:24'),
 (18, 17, 16, '员工列表', 'fa-address-book-o', 'staffs', '2020-06-29 01:11:47', '2020-06-29 01:11:58'),
 (19, 17, 17, '员工工资管理', 'fa-money', 'staffwage', '2020-06-29 01:12:55', '2020-06-29 01:12:55'),
-(20, 17, 18, '请假管理', NULL, 'staffleave', '2020-06-29 02:52:48', '2020-06-29 02:52:48');
+(20, 17, 18, '请假管理', NULL, 'staffleave', '2020-06-29 02:52:48', '2020-06-29 02:52:48'),
+(21, 0, 19, '租车管理', 'fa-address-book-o', NULL, '2020-06-29 21:28:26', '2020-06-29 21:28:26'),
+(22, 21, 20, '租车订单列表', NULL, 'rentcars', '2020-06-29 21:28:52', '2020-06-29 21:28:52');
 
 -- --------------------------------------------------------
 
@@ -1087,7 +1089,174 @@ INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `inp
 (937, 1, 'admin/staffleave/create', 'GET', '127.0.0.1', '[]', '2020-06-29 03:39:55', '2020-06-29 03:39:55'),
 (938, 1, 'admin/staffleave/create', 'GET', '127.0.0.1', '[]', '2020-06-29 03:41:08', '2020-06-29 03:41:08'),
 (939, 1, 'admin/staffleave/create', 'GET', '127.0.0.1', '[]', '2020-06-29 03:51:39', '2020-06-29 03:51:39'),
-(940, 1, 'admin/staffleave/create', 'GET', '127.0.0.1', '[]', '2020-06-29 03:52:35', '2020-06-29 03:52:35');
+(940, 1, 'admin/staffleave/create', 'GET', '127.0.0.1', '[]', '2020-06-29 03:52:35', '2020-06-29 03:52:35'),
+(941, 0, 'admin/auth/login', 'GET', '127.0.0.1', '[]', '2020-06-29 21:23:33', '2020-06-29 21:23:33'),
+(942, 0, 'admin/auth/login', 'POST', '127.0.0.1', '{\"_token\":\"FVWSYOlybGJ5fkugEDHXLDas6YaYZbdsBve2Q6hV\",\"username\":\"admin\",\"password\":\"adm******\"}', '2020-06-29 21:23:38', '2020-06-29 21:23:38'),
+(943, 1, 'admin', 'GET', '127.0.0.1', '[]', '2020-06-29 21:23:39', '2020-06-29 21:23:39'),
+(944, 1, 'admin/cars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:23:58', '2020-06-29 21:23:58'),
+(945, 1, 'admin/carsmaintainlog', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:24:00', '2020-06-29 21:24:00'),
+(946, 1, 'admin/helpers/scaffold', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:24:03', '2020-06-29 21:24:03'),
+(947, 1, 'admin/helpers/scaffold/table', 'POST', '127.0.0.1', '{\"db\":\"dcat\",\"tb\":\"rent_car\",\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 21:24:10', '2020-06-29 21:24:10'),
+(948, 1, 'admin/helpers/scaffold', 'GET', '127.0.0.1', '{\"singular\":\"rent_car\"}', '2020-06-29 21:24:11', '2020-06-29 21:24:11'),
+(949, 1, 'admin/helpers/scaffold', 'POST', '127.0.0.1', '{\"table_name\":\"rent_car\",\"exist-table\":\"dcat|rent_car\",\"model_name\":\"App\\\\Models\\\\RentCarModel\",\"controller_name\":\"App\\\\Admin\\\\Controllers\\\\RentCarController\",\"create\":[\"migration\",\"model\",\"repository\",\"controller\",\"lang\"],\"fields\":[{\"name\":\"rent_num\",\"translation\":\"\\u79df\\u8d41\\u5355\\u53f7\",\"type\":\"string\",\"key\":null,\"default\":null,\"comment\":\"\\u79df\\u8d41\\u5355\\u53f7\"},{\"name\":\"client_id\",\"translation\":\"\\u5ba2\\u6237ID\",\"type\":\"integer\",\"key\":null,\"default\":null,\"comment\":\"\\u5ba2\\u6237ID\"},{\"name\":\"staff_id\",\"translation\":\"\\u76f8\\u5173\\u53f8\\u673a\",\"type\":\"integer\",\"key\":null,\"default\":null,\"comment\":\"\\u76f8\\u5173\\u53f8\\u673a\"},{\"name\":\"current_mileage\",\"translation\":\"\\u5f53\\u524d\\u5386\\u7a0b\",\"type\":\"integer\",\"nullable\":\"on\",\"key\":null,\"default\":\"0\",\"comment\":\"\\u5f53\\u524d\\u5386\\u7a0b\"},{\"name\":\"car_type\",\"translation\":\"\\u6c7d\\u8f66\\u7c7b\\u578b\",\"type\":\"integer\",\"key\":null,\"default\":\"0\",\"comment\":\"\\u6c7d\\u8f66\\u7c7b\\u578b\"},{\"name\":\"car_id\",\"translation\":\"\\u6c7d\\u8f66ID\",\"type\":\"integer\",\"key\":null,\"default\":\"0\",\"comment\":\"\\u6c7d\\u8f66ID\"},{\"name\":\"rent_type\",\"translation\":\"\\u79df\\u8d41\\u65b9\\u5f0f\",\"type\":\"integer\",\"key\":null,\"default\":\"0\",\"comment\":\"\\u79df\\u8d41\\u65b9\\u5f0f\"},{\"name\":\"rent_at\",\"translation\":\"\\u79df\\u8d41\\u65f6\\u95f4\",\"type\":\"timestamp\",\"key\":null,\"default\":\"CURRENT_TIMESTAMP\",\"comment\":\"\\u79df\\u8d41\\u65f6\\u95f4\"},{\"name\":\"rent_day\",\"translation\":\"\\u9884\\u79df\\u5929\\u6570\",\"type\":\"integer\",\"key\":null,\"default\":\"0\",\"comment\":\"\\u9884\\u79df\\u5929\\u6570\"},{\"name\":\"deposit\",\"translation\":\"\\u5df2\\u4ea4\\u62bc\\u91d1\",\"type\":\"float\",\"nullable\":\"on\",\"key\":null,\"default\":\"0.00\",\"comment\":\"\\u5df2\\u4ea4\\u62bc\\u91d1\"},{\"name\":\"rent\",\"translation\":\"\\u5df2\\u4ed8\\u79df\\u91d1\",\"type\":\"float\",\"nullable\":\"on\",\"key\":null,\"default\":\"0.00\",\"comment\":\"\\u5df2\\u4ed8\\u79df\\u91d1\"},{\"name\":\"oil_volume\",\"translation\":\"\\u5f53\\u524d\\u6cb9\\u91cf\",\"type\":\"string\",\"nullable\":\"on\",\"key\":null,\"default\":null,\"comment\":\"\\u5f53\\u524d\\u6cb9\\u91cf\"},{\"name\":\"redriving\",\"translation\":\"\\u9650\\u9a76\",\"type\":\"string\",\"nullable\":\"on\",\"key\":null,\"default\":null,\"comment\":\"\\u9650\\u9a76\"},{\"name\":\"odrive_price\",\"translation\":\"\\u8d85\\u9a76\\u52a0\\u4ef7\",\"type\":\"float\",\"nullable\":\"on\",\"key\":null,\"default\":\"0.00\",\"comment\":\"\\u8d85\\u9a76\\u52a0\\u4ef7\"},{\"name\":\"timeout_price\",\"translation\":\"\\u8d85\\u65f6\\u52a0\\u4ef7\",\"type\":\"float\",\"nullable\":\"on\",\"key\":null,\"default\":\"0.00\",\"comment\":\"\\u8d85\\u65f6\\u52a0\\u4ef7\"},{\"name\":\"remark\",\"translation\":\"\\u5907\\u6ce8\",\"type\":\"string\",\"nullable\":\"on\",\"key\":null,\"default\":null,\"comment\":\"\\u5907\\u6ce8\"},{\"name\":\"op_id\",\"translation\":\"\\u64cd\\u4f5c\\u4eba\",\"type\":\"integer\",\"key\":null,\"default\":null,\"comment\":\"\\u64cd\\u4f5c\\u4eba\"}],\"primary_key\":\"id\",\"timestamps\":\"1\",\"soft_deletes\":\"1\",\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 21:24:23', '2020-06-29 21:24:23'),
+(950, 1, 'admin/helpers/scaffold', 'GET', '127.0.0.1', '[]', '2020-06-29 21:24:25', '2020-06-29 21:24:25'),
+(951, 1, 'admin/auth/menu', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:27:39', '2020-06-29 21:27:39'),
+(952, 1, 'admin/auth/menu', 'POST', '127.0.0.1', '{\"parent_id\":\"0\",\"title\":\"\\u79df\\u8f66\\u7ba1\\u7406\",\"icon\":\"fa-address-book-o\",\"uri\":null,\"roles\":[null],\"permissions\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 21:28:26', '2020-06-29 21:28:26'),
+(953, 1, 'admin/auth/menu', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:28:26', '2020-06-29 21:28:26'),
+(954, 1, 'admin/auth/menu', 'POST', '127.0.0.1', '{\"parent_id\":\"21\",\"title\":\"\\u79df\\u8f66\\u8ba2\\u5355\\u5217\\u8868\",\"icon\":null,\"uri\":\"rentcars\",\"roles\":[null],\"permissions\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 21:28:52', '2020-06-29 21:28:52'),
+(955, 1, 'admin/auth/menu', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:28:53', '2020-06-29 21:28:53'),
+(956, 1, 'admin/auth/menu', 'GET', '127.0.0.1', '[]', '2020-06-29 21:28:55', '2020-06-29 21:28:55'),
+(957, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:28:58', '2020-06-29 21:28:58'),
+(958, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 21:29:03', '2020-06-29 21:29:03'),
+(959, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 21:37:30', '2020-06-29 21:37:30'),
+(960, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 21:40:01', '2020-06-29 21:40:01'),
+(961, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 21:40:03', '2020-06-29 21:40:03'),
+(962, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 21:40:19', '2020-06-29 21:40:19'),
+(963, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 21:52:37', '2020-06-29 21:52:37'),
+(964, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:04:53', '2020-06-29 22:04:53'),
+(965, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:05:20', '2020-06-29 22:05:20'),
+(966, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:05:52', '2020-06-29 22:05:52'),
+(967, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:05:54', '2020-06-29 22:05:54'),
+(968, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:09', '2020-06-29 22:06:09'),
+(969, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:45', '2020-06-29 22:06:45'),
+(970, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:46', '2020-06-29 22:06:46'),
+(971, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:46', '2020-06-29 22:06:46'),
+(972, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:52', '2020-06-29 22:06:52'),
+(973, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:52', '2020-06-29 22:06:52'),
+(974, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:52', '2020-06-29 22:06:52'),
+(975, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:52', '2020-06-29 22:06:52'),
+(976, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:53', '2020-06-29 22:06:53'),
+(977, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:06:53', '2020-06-29 22:06:53'),
+(978, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:07:33', '2020-06-29 22:07:33'),
+(979, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:11', '2020-06-29 22:09:11'),
+(980, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(981, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(982, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(983, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(984, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(985, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(986, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:12', '2020-06-29 22:09:12'),
+(987, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(988, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(989, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(990, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(991, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(992, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(993, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(994, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:13', '2020-06-29 22:09:13'),
+(995, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '[]', '2020-06-29 22:09:17', '2020-06-29 22:09:17'),
+(996, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:39', '2020-06-29 22:09:39'),
+(997, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:40', '2020-06-29 22:09:40'),
+(998, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:40', '2020-06-29 22:09:40'),
+(999, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:09:40', '2020-06-29 22:09:40'),
+(1000, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:10:51', '2020-06-29 22:10:51'),
+(1001, 1, 'admin/client/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:10:52', '2020-06-29 22:10:52'),
+(1002, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:11:01', '2020-06-29 22:11:01'),
+(1003, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:12:22', '2020-06-29 22:12:22'),
+(1004, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:12:24', '2020-06-29 22:12:24'),
+(1005, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:12:27', '2020-06-29 22:12:27'),
+(1006, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:12:59', '2020-06-29 22:12:59'),
+(1007, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:16:07', '2020-06-29 22:16:07'),
+(1008, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:16:51', '2020-06-29 22:16:51'),
+(1009, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:31:06', '2020-06-29 22:31:06'),
+(1010, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:31:22', '2020-06-29 22:31:22'),
+(1011, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:31:25', '2020-06-29 22:31:25'),
+(1012, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:32:08', '2020-06-29 22:32:08'),
+(1013, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:32:10', '2020-06-29 22:32:10'),
+(1014, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"7\"}', '2020-06-29 22:32:18', '2020-06-29 22:32:18'),
+(1015, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:32:21', '2020-06-29 22:32:21'),
+(1016, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"7\"}', '2020-06-29 22:32:26', '2020-06-29 22:32:26'),
+(1017, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:32:28', '2020-06-29 22:32:28'),
+(1018, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:33:49', '2020-06-29 22:33:49'),
+(1019, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:33:51', '2020-06-29 22:33:51'),
+(1020, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:34:51', '2020-06-29 22:34:51'),
+(1021, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:34:53', '2020-06-29 22:34:53'),
+(1022, 1, 'admin/industry', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:35:07', '2020-06-29 22:35:07'),
+(1023, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:36:39', '2020-06-29 22:36:39'),
+(1024, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:36:47', '2020-06-29 22:36:47'),
+(1025, 1, 'admin/cars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:36:52', '2020-06-29 22:36:52'),
+(1026, 1, 'admin/cars/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:36:57', '2020-06-29 22:36:57'),
+(1027, 1, 'admin/client', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:08', '2020-06-29 22:37:08'),
+(1028, 1, 'admin/client/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:10', '2020-06-29 22:37:10'),
+(1029, 1, 'admin/cars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:17', '2020-06-29 22:37:17'),
+(1030, 1, 'admin/carsmaintainlog', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:18', '2020-06-29 22:37:18'),
+(1031, 1, 'admin/carservicelog', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:19', '2020-06-29 22:37:19'),
+(1032, 1, 'admin/carservicelog', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:20', '2020-06-29 22:37:20'),
+(1033, 1, 'admin', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:21', '2020-06-29 22:37:21'),
+(1034, 1, 'admin/industry', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:37:23', '2020-06-29 22:37:23'),
+(1035, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:42:04', '2020-06-29 22:42:04'),
+(1036, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:42:06', '2020-06-29 22:42:06'),
+(1037, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:55:32', '2020-06-29 22:55:32'),
+(1038, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:55:38', '2020-06-29 22:55:38'),
+(1039, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:55:45', '2020-06-29 22:55:45'),
+(1040, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:55:52', '2020-06-29 22:55:52'),
+(1041, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:56:06', '2020-06-29 22:56:06'),
+(1042, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"255,412.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 22:56:22', '2020-06-29 22:56:22'),
+(1043, 1, 'admin/rentcars', 'GET', '127.0.0.1', '[]', '2020-06-29 22:56:28', '2020-06-29 22:56:28'),
+(1044, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:56:34', '2020-06-29 22:56:34'),
+(1045, 1, 'admin/staffs', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:57:00', '2020-06-29 22:57:00'),
+(1046, 1, 'admin/staffs/1/edit', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 22:57:05', '2020-06-29 22:57:05'),
+(1047, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 22:57:48', '2020-06-29 22:57:48'),
+(1048, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 22:57:52', '2020-06-29 22:57:52'),
+(1049, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 22:58:00', '2020-06-29 22:58:00'),
+(1050, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"52,441.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 22:58:15', '2020-06-29 22:58:15'),
+(1051, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 23:01:51', '2020-06-29 23:01:51'),
+(1052, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 23:01:59', '2020-06-29 23:01:59'),
+(1053, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"8\"}', '2020-06-29 23:02:11', '2020-06-29 23:02:11'),
+(1054, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 23:02:13', '2020-06-29 23:02:13'),
+(1055, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"252,251.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 23:02:22', '2020-06-29 23:02:22'),
+(1056, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 23:05:52', '2020-06-29 23:05:52'),
+(1057, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 23:05:58', '2020-06-29 23:05:58'),
+(1058, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 23:06:04', '2020-06-29 23:06:04'),
+(1059, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"52,554.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 23:06:14', '2020-06-29 23:06:14'),
+(1060, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 23:06:40', '2020-06-29 23:06:40'),
+(1061, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 23:06:46', '2020-06-29 23:06:46'),
+(1062, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 23:06:52', '2020-06-29 23:06:52'),
+(1063, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"5,525.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 23:06:59', '2020-06-29 23:06:59'),
+(1064, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 23:07:29', '2020-06-29 23:07:29'),
+(1065, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 23:07:34', '2020-06-29 23:07:34'),
+(1066, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 23:07:43', '2020-06-29 23:07:43'),
+(1067, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"66,665.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"biXE52Bqba6WjCvJ5XbX15AnUxZBI92RTJcIw9pm\"}', '2020-06-29 23:07:50', '2020-06-29 23:07:50'),
+(1068, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-29 23:08:34', '2020-06-29 23:08:34'),
+(1069, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-29 23:08:39', '2020-06-29 23:08:39'),
+(1070, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-29 23:08:44', '2020-06-29 23:08:44'),
+(1071, 1, 'admin/staffs', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 23:11:13', '2020-06-29 23:11:13'),
+(1072, 1, 'admin/cars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 23:11:16', '2020-06-29 23:11:16'),
+(1073, 1, 'admin/client', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 23:11:19', '2020-06-29 23:11:19'),
+(1074, 0, 'admin/auth/login', 'GET', '127.0.0.1', '[]', '2020-06-30 01:40:47', '2020-06-30 01:40:47'),
+(1075, 0, 'admin/auth/login', 'POST', '127.0.0.1', '{\"_token\":\"gD7h5bcp73QPQtXCXRvfkXTDh2CxmPLvCUeWOZHI\",\"username\":\"admin\",\"password\":\"adm******\"}', '2020-06-30 01:40:54', '2020-06-30 01:40:54'),
+(1076, 1, 'admin', 'GET', '127.0.0.1', '[]', '2020-06-30 01:40:55', '2020-06-30 01:40:55'),
+(1077, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 01:41:01', '2020-06-30 01:41:01'),
+(1078, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 01:41:03', '2020-06-30 01:41:03'),
+(1079, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 01:41:29', '2020-06-30 01:41:29'),
+(1080, 1, 'admin/rentcars', 'GET', '127.0.0.1', '[]', '2020-06-30 01:43:31', '2020-06-30 01:43:31'),
+(1081, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 01:43:33', '2020-06-30 01:43:33'),
+(1082, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-30 01:43:36', '2020-06-30 01:43:36'),
+(1083, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-30 01:43:46', '2020-06-30 01:43:46'),
+(1084, 1, 'admin/rentcars', 'POST', '127.0.0.1', '{\"client_id\":\"1\",\"mobile\":\"18321000001\",\"current_mileage\":\"5,552,244.00\",\"car_type\":\"6\",\"car_id\":\"\\u4eacW12EWA\",\"rent_type\":\"21\",\"staff_id\":null,\"rent_at\":null,\"rent_day\":null,\"deposit\":null,\"rent\":null,\"oil_volume\":null,\"redriving\":null,\"odrive_price\":null,\"timeout_price\":null,\"remark\":null,\"op_id\":null,\"_token\":\"NoDY1GmToR7EZ3toznAlHyDMPPiNNIFOdwZXhF9T\",\"_previous_\":\"http:\\/\\/car.com\\/admin\\/rentcars\"}', '2020-06-30 01:43:52', '2020-06-30 01:43:52'),
+(1085, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:42', '2020-06-30 01:44:42'),
+(1086, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:42', '2020-06-30 01:44:42'),
+(1087, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:42', '2020-06-30 01:44:42'),
+(1088, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:42', '2020-06-30 01:44:42'),
+(1089, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:42', '2020-06-30 01:44:42'),
+(1090, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:43', '2020-06-30 01:44:43'),
+(1091, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:43', '2020-06-30 01:44:43'),
+(1092, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:43', '2020-06-30 01:44:43'),
+(1093, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:44:43', '2020-06-30 01:44:43'),
+(1094, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:45:28', '2020-06-30 01:45:28'),
+(1095, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-30 01:45:32', '2020-06-30 01:45:32'),
+(1096, 1, 'admin/getcars', 'GET', '127.0.0.1', '{\"q\":\"6\"}', '2020-06-30 01:45:38', '2020-06-30 01:45:38'),
+(1097, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:46:04', '2020-06-30 01:46:04'),
+(1098, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:46:40', '2020-06-30 01:46:40'),
+(1099, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:57:15', '2020-06-30 01:57:15'),
+(1100, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:57:39', '2020-06-30 01:57:39'),
+(1101, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '[]', '2020-06-30 01:57:52', '2020-06-30 01:57:52'),
+(1102, 1, 'admin/cars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 02:27:33', '2020-06-30 02:27:33'),
+(1103, 1, 'admin/carsmaintainlog/create', 'GET', '127.0.0.1', '{\"id\":\"1\",\"_dialog_form_\":\"1\"}', '2020-06-30 02:27:35', '2020-06-30 02:27:35'),
+(1104, 1, 'admin/cars', 'GET', '127.0.0.1', '[]', '2020-06-30 03:11:25', '2020-06-30 03:11:25'),
+(1105, 1, 'admin/rentcars', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 03:11:29', '2020-06-30 03:11:29'),
+(1106, 1, 'admin/rentcars/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-30 03:11:31', '2020-06-30 03:11:31'),
+(1107, 1, 'admin/getclient', 'GET', '127.0.0.1', '{\"id\":\"1\"}', '2020-06-30 03:11:33', '2020-06-30 03:11:33');
 
 -- --------------------------------------------------------
 
@@ -1232,6 +1401,7 @@ INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `reme
 CREATE TABLE `cars` (
   `id` int(11) NOT NULL COMMENT '自增id',
   `car_type` int(11) NOT NULL COMMENT '汽车类型',
+  `cp_id` int(11) NOT NULL COMMENT '所属公司',
   `car_num` varchar(50) NOT NULL COMMENT '车牌号',
   `car_engine_num` varchar(50) DEFAULT NULL COMMENT '发动机号',
   `car_spot_num` varchar(50) DEFAULT NULL COMMENT '车辆识别号',
@@ -1256,8 +1426,8 @@ CREATE TABLE `cars` (
 -- 转存表中的数据 `cars`
 --
 
-INSERT INTO `cars` (`id`, `car_type`, `car_num`, `car_engine_num`, `car_spot_num`, `car_img`, `op_id`, `inspection_at`, `hinsure_at`, `binsure_at`, `created_at`, `updated_at`, `deleted_at`, `by_mileage`, `pd_mileage`, `cly_mileage`, `by_status`, `pd_status`, `cly_status`, `car_status`) VALUES
-(1, 6, '京W12EWA', NULL, NULL, '[]', 1, '2020-06-30', NULL, NULL, '2020-06-26 02:56:37', '2020-06-28 01:03:46', NULL, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `cars` (`id`, `car_type`, `cp_id`, `car_num`, `car_engine_num`, `car_spot_num`, `car_img`, `op_id`, `inspection_at`, `hinsure_at`, `binsure_at`, `created_at`, `updated_at`, `deleted_at`, `by_mileage`, `pd_mileage`, `cly_mileage`, `by_status`, `pd_status`, `cly_status`, `car_status`) VALUES
+(1, 6, 0, '京W12EWA', NULL, NULL, '[]', 1, '2020-06-30', NULL, NULL, '2020-06-26 02:56:37', '2020-06-28 01:03:46', NULL, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1443,6 +1613,8 @@ CREATE TABLE `rent_car` (
   `id` int(11) NOT NULL COMMENT '租赁ID',
   `rent_num` varchar(50) NOT NULL COMMENT '租赁单号',
   `client_id` int(11) NOT NULL COMMENT '客户ID',
+  `mobile` varchar(20) NOT NULL COMMENT '联系方式',
+  `staff_id` int(11) NOT NULL COMMENT '相关司机',
   `current_mileage` int(11) DEFAULT '0' COMMENT '当前历程',
   `car_type` int(11) NOT NULL DEFAULT '0' COMMENT '汽车类型',
   `car_id` int(11) NOT NULL DEFAULT '0' COMMENT '汽车ID',
@@ -1724,13 +1896,13 @@ ALTER TABLE `admin_industry`
 -- 使用表AUTO_INCREMENT `admin_menu`
 --
 ALTER TABLE `admin_menu`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- 使用表AUTO_INCREMENT `admin_operation_log`
 --
 ALTER TABLE `admin_operation_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=941;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1108;
 
 --
 -- 使用表AUTO_INCREMENT `admin_permissions`
