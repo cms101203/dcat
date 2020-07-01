@@ -252,12 +252,14 @@ HTML
 
     protected function getcars(){
         $q = intval(request()->get('q'));
-        $list = CarsModel::where('car_type',$q)->get(['id','car_num'])->toArray();
+
+        $list = CarsModel::where('car_type',$q)->get(['id','car_num','car_status'])->toArray();
         $data = [];
         if ($list){
             foreach ($list as $k=>$v){
                 $data[$k]['id'] = $v['id'];
-                $data[$k]['text'] = $v['car_num'];
+                $carstatus = $v['car_status'] ? "-租赁中" : "";
+                $data[$k]['text'] = $v['car_num'].$carstatus;
             }
         }
         return $data;

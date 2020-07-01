@@ -37,5 +37,7 @@ Route::group([
     $router->resource('/staffleave', StaffLeaveController::class);
     //请假管理
     $router->resource('/rentcars', RentCarController::class);
+    //租金记录
+    $router->resource('/rentcarslog', RentCarDeductionLogController::class);
 
 });
