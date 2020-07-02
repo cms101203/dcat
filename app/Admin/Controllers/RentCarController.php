@@ -68,6 +68,9 @@ class RentCarController extends AdminController
                 }
 
             });
+            $grid->column('returncar','还车')->display(function ($item)use($grid){
+                return "<a href='/admin/returncars/create?id=".$this->id."'>还车</a>";
+            });
 
             Form::dialog('新增租金记录')
                 ->click('.create-form') // 绑定点击按钮

@@ -6,6 +6,7 @@ use App\Admin\Repositories\RentCarDeductionLog;
 use App\Models\RentCarModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 
@@ -30,10 +31,10 @@ class RentCarDeductionLogController extends AdminController
             $grid->op_id;
             $grid->created_at;
             $grid->updated_at->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -67,8 +68,9 @@ class RentCarDeductionLogController extends AdminController
      *
      * @return Form
      */
-    protected function form()
+    protected function form(Content $content)
     {
+
         $id = intval(request()->get('id'));
         return Form::make(new RentCarDeductionLog(), function (Form $form) use ($id) {
             $form->display('id');
@@ -120,7 +122,7 @@ class RentCarDeductionLogController extends AdminController
             $form->date('next_at')->required();
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
-        
+
             $form->display('created_at');
             $form->display('updated_at');
         });

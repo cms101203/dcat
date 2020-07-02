@@ -39,5 +39,7 @@ Route::group([
     $router->resource('/rentcars', RentCarController::class);
     //租金记录
     $router->resource('/rentcarslog', RentCarDeductionLogController::class);
+    //还车记录
+    $router->resource('/returncars', ReturnCarController::class);
 
 });

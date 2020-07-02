@@ -6,12 +6,12 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class RentCarModel extends BaseModel
+class ReturnCarModel extends Model
 {
 	use HasDateTimeFormatter;
     use SoftDeletes;
 
-    protected $table = 'rent_car';
-
+    protected $table = 'return_car';
+    
 
 }
