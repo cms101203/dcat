@@ -21,7 +21,7 @@ class RentCarDeductionLogController extends AdminController
     {
         return Grid::make(new RentCarDeductionLog(), function (Grid $grid) {
             $grid->id->sortable();
-            $grid->rent_id;
+            $grid->rent_id->using(RentCarModel::dataOptions(['id','rent_num']));
             $grid->rent_money;
             $grid->rent_over;
             $grid->deposit_money;
@@ -68,7 +68,7 @@ class RentCarDeductionLogController extends AdminController
      *
      * @return Form
      */
-    protected function form(Content $content)
+    protected function form()
     {
 
         $id = intval(request()->get('id'));

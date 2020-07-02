@@ -11,7 +11,7 @@ return [
         'return_oil' => '还车油量',
         'is_odrive' => '是否超驶',
         'is_time' => '是否超时',
-        'oy_price' => '桥路费',
+        'oy_price' => '费用',
         'wz_deposit' => '违章押金',
         'receivable' => '应收金额',
         'paid' => '实收金额',

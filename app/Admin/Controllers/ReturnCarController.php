@@ -4,10 +4,15 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\ReturnCar;
 use App\Models\RentCarModel;
+use App\Models\ReturnCarModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+
+use Dcat\Admin\Layout\Column;
+use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Layout\Row;
 
 class ReturnCarController extends AdminController
 {
@@ -21,21 +26,30 @@ class ReturnCarController extends AdminController
 
         return Grid::make(new ReturnCar(), function (Grid $grid) {
             $grid->id->sortable();
-            $grid->rent_id;
-            $grid->is_checkout;
+            $grid->rent_id->using(RentCarModel::dataOptions(['id','rent_num']));
+            $grid->is_checkout->using([0=>'未结帐',1=>'已结帐']);
             $grid->return_at;
-            $grid->return_mileage;
+            $grid->return_mileage->display(function ($item){
+                return $item."/Km";
+            });
             $grid->return_oil;
-            $grid->is_odrive;
-            $grid->is_time;
-            $grid->oy_price;
-            $grid->wz_deposit;
-            $grid->receivable;
-            $grid->paid;
-            $grid->remark;
-            $grid->op_id;
-            $grid->created_at;
-            $grid->updated_at->sortable();
+            $grid->is_odrive->using([0=>'未超驶',1=>'超驶']);
+            $grid->is_time->using([0=>'未超时',1=>'超时']);
+            $grid->oy_price->display(function ($item){
+                return $item."/元";
+            });
+            $grid->wz_deposit->display(function ($item){
+                return $item."/元";
+            });
+            $grid->receivable->display(function ($item){
+                return $item."/元";
+            });
+            $grid->paid->display(function ($item){
+                return $item."/元";
+            });
+            $grid->remark->responsive(0);;
+            $grid->created_at->responsive(0);;
+            $grid->updated_at->sortable()->responsive(0);;
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
@@ -53,8 +67,12 @@ class ReturnCarController extends AdminController
      */
     protected function detail($id)
     {
+        $detail = ReturnCarModel::where('id',$id)->first();
+        $rent = RentCarModel::where('id',$detail['rent_id'])->first();
+        return view('returncar.details',compact('detail','rent'));
         return Show::make($id, new ReturnCar(), function (Show $show) {
-            $show->id;
+
+            $show->content->view('returncar.details');
             $show->rent_id;
             $show->is_checkout;
             $show->return_at;
