@@ -84,12 +84,12 @@ class ReturnCarController extends AdminController
         return Form::make(new ReturnCar(), function (Form $form) use($id){
             $form->display('id');
             $form->select('rent_id')->options(RentCarModel::dataOptions(['id','rent_num']))->default($id)->required();
-            $form->radio('is_checkout')->options([0=>'未结帐',1=>'已结帐']);
+            $form->radio('is_checkout')->options([0=>'未结帐',1=>'已结帐'])->default(0);
             $form->datetime('return_at');
             $form->number('return_mileage');
             $form->text('return_oil')->default('满格');
-            $form->radio('is_odrive')->options([0=>'未超驶',1=>'超驶']);
-            $form->text('is_time')->options([0=>'未超时',1=>'超时']);
+            $form->radio('is_odrive')->options([0=>'未超驶',1=>'超驶'])->default(0);
+            $form->radio('is_time')->options([0=>'未超时',1=>'超时'])->default(0);
             $form->number('oy_price');
             $form->number('wz_deposit');
             $form->number('receivable');
