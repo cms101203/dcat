@@ -41,5 +41,13 @@ Route::group([
     $router->resource('/rentcarslog', RentCarDeductionLogController::class);
     //还车记录
     $router->resource('/returncars', ReturnCarController::class);
+    //公司管理
+    $router->resource('/companys', RentCompanyController::class);
 
+    $router->group([//用户管理
+        'namespace' => 'Auth',
+    ], function($router) {
+        //用户管理
+        $router->resource('/users', UserController::class);
+    });
 });

@@ -7,7 +7,7 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class DriverWageModel extends Model
+class RentCompanyModel extends BaseModel
 {
 	use HasDateTimeFormatter;
     use SoftDeletes;
@@ -23,7 +23,7 @@ class DriverWageModel extends Model
         static::addGlobalScope($rolescope);
     }
 
-    protected $table = 'staff_wage';
+    protected $table = 'rent_company';
 
 
 }

@@ -12,6 +12,7 @@ return [
         'driver_status' => '司机状态',
         'staff_type' => '员工职属',
         'type' => '司机所属',
+        'license' => '驾照',
         'op_id' => '添加人',
     ],
     'options' => [

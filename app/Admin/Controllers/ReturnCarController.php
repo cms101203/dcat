@@ -3,10 +3,15 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\ReturnCar;
+use App\Models\CarsModel;
+use App\Models\ClientDetailModel;
+use App\Models\DriverDetailModel;
 use App\Models\RentCarModel;
+use App\Models\RentCompanyModel;
 use App\Models\ReturnCarModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Models\Administrator;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 
@@ -16,6 +21,7 @@ use Dcat\Admin\Layout\Row;
 
 class ReturnCarController extends AdminController
 {
+    protected $title="还车管理";
     /**
      * Make a grid builder.
      *
@@ -69,26 +75,17 @@ class ReturnCarController extends AdminController
     {
         $detail = ReturnCarModel::where('id',$id)->first();
         $rent = RentCarModel::where('id',$detail['rent_id'])->first();
-        return view('returncar.details',compact('detail','rent'));
-        return Show::make($id, new ReturnCar(), function (Show $show) {
-
-            $show->content->view('returncar.details');
-            $show->rent_id;
-            $show->is_checkout;
-            $show->return_at;
-            $show->return_mileage;
-            $show->return_oil;
-            $show->is_odrive;
-            $show->is_time;
-            $show->oy_price;
-            $show->wz_deposit;
-            $show->receivable;
-            $show->paid;
-            $show->remark;
-            $show->op_id;
-            $show->created_at;
-            $show->updated_at;
-        });
+        $client = [];
+        $cars = [];
+        $staff = [];
+        $rentstatus = [0=>'未结帐',1=>'已结帐'];
+        $company = RentCompanyModel::where('id',auth('admin')->user()->cp_id)->first();
+        if ($rent){
+            $client = ClientDetailModel::where('id',$rent['client_id'])->first();
+            $cars = CarsModel::leftJoin('admin_industry','admin_industry.id','=','cars.car_type')->where('cars.id',$rent['car_id'])->first();
+            $staff = DriverDetailModel::where('id',$rent['staff_id'])->first();
+        }
+        return view('returncar.details',compact('detail','rent','client','cars','staff','rentstatus','company'));
     }
 
     /**

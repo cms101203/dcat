@@ -28,6 +28,7 @@ class DriverDetailController extends AdminController
             $grid->name;
             $grid->mobile;
             $grid->id_card;
+            $grid->license->using(AdminIndustry::dataOptions(['id','title'],['parent_id'=>41]));
             $grid->staff_status->select([1=>'正常',2=>'休假中','3'=>'已离职']);
             $grid->driver_status->select([0=>'空闲中',1=>'已外派']);
             $grid->type->using([1=>'本公司',2=>'外调',3=>'临时司机']);
@@ -142,6 +143,7 @@ class DriverDetailController extends AdminController
             $form->text('name')->required();
             $form->tel('mobile')->required();
             $form->text('id_card');
+            $form->select('license')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>41]));
             $form->multipleImage('photo_img')->saving(function ($imgs){
                 return json_encode($imgs);
             });
