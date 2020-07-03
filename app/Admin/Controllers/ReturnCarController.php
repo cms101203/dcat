@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\ReturnCar;
+use App\Models\AdminIndustry;
+use App\Models\CarsIllegalLogModel;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
 use App\Models\DriverDetailModel;
@@ -11,13 +13,13 @@ use App\Models\RentCompanyModel;
 use App\Models\ReturnCarModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Models\Administrator;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
+use Dcat\Admin\Widgets\Table;
 
 class ReturnCarController extends AdminController
 {
@@ -53,9 +55,44 @@ class ReturnCarController extends AdminController
             $grid->paid->display(function ($item){
                 return $item."/元";
             });
-            $grid->remark->responsive(0);;
-            $grid->created_at->responsive(0);;
-            $grid->updated_at->sortable()->responsive(0);;
+            $grid->remark->responsive(0);
+            $grid->column('illega','违章记录')->display(function ($item)use ($grid){
+                $rent = RentCarModel::where('id',$this->rent_id)->first();
+                return "<span class='create-form' data-url='illegalog/create?id={$this->id}&rid={$this->rent_id}&cid={$rent->car_id}&sid={$rent->staff_id}' title='新增违章记录'><i class='fa  fa-cogs'></i></span>";
+            })->expand(function ($model){
+                $byarr = [];
+                $bylist = CarsIllegalLogModel::where('rent_id',$this->rent_id)->where('return_id',$this->id)->get()->toArray();
+                if ($bylist){
+                    foreach ($bylist as $k=>$v){
+                        $rent = RentCarModel::where('id',$v['rent_id'])->first();
+                        $cars = CarsModel::where('id',$v['car_id'])->first();
+                        $staff = DriverDetailModel::where('id',$v['staff_id'])->first();
+                        $type = AdminIndustry::where('id',$v['type'])->first();
+                        $offsetcars = CarsModel::where('id',$v['offset_car'])->first();
+                        $byarr[$k]['rent_num'] = $rent['rent_num'];
+                        $byarr[$k]['car_id']  = $cars['car_num'];
+                        $byarr[$k]['staff'] = empty($staff) ? "--" : $staff['name'] ;
+                        $byarr[$k]['bits'] = $v['bits']." 分" ;
+                        $byarr[$k]['money'] = $v['money']." 元" ;
+                        $byarr[$k]['illegal_at'] = $v['illegal_at'];
+                        $byarr[$k]['type'] = empty($type) ?  "--" : $type['title'] ;
+                        $byarr[$k]['offset_car'] = empty($offsetcars) ?  "--" : $offsetcars['car_num'] ;
+                        $byarr[$k]['offset_money'] = $v['offset_money'] ;
+                        $byarr[$k]['remark'] = $v['remark'] ;
+                    }
+                    return new Table(['租车订单号','违章车辆','违章司机','扣分','罚款金额','违章时间','处理方式','抵消车辆','抵消金额','备注'],$byarr);
+                }
+
+            });
+
+            Form::dialog('违章记录')
+                ->click('.create-form') // 绑定点击按钮
+                ->url('illegalog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
+            $grid->created_at->responsive(0);
+            $grid->updated_at->sortable()->responsive(0);
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');

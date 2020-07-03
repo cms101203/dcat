@@ -43,6 +43,8 @@ Route::group([
     $router->resource('/returncars', ReturnCarController::class);
     //公司管理
     $router->resource('/companys', RentCompanyController::class);
+    //违章管理
+    $router->resource('/illegalog', CarsIllegalLogController::class);
 
     $router->group([//用户管理
         'namespace' => 'Auth',

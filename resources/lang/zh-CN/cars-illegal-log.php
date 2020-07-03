@@ -13,6 +13,8 @@ return [
         'type' => '处理方式',
         'remark' => '备注',
         'op_id' => '操作人',
+        'offset_car'=>'抵消车辆',
+        'offset_money'=>'抵消金额'
     ],
     'options' => [
     ],
