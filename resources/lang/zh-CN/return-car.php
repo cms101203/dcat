@@ -1,4 +1,4 @@
-<?php 
+<?php
 return [
     'labels' => [
         'ReturnCar' => 'ReturnCar',
@@ -16,6 +16,8 @@ return [
         'receivable' => '应收金额',
         'paid' => '实收金额',
         'remark' => '备注',
+        'refund' =>'返款金额',
+        'refund_remark' =>'返款备注',
         'op_id' => '操作人',
     ],
     'options' => [

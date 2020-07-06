@@ -30,12 +30,15 @@ class RentCarController extends AdminController
     {
         return Grid::make(new RentCar(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
+
             $grid->id->sortable();
             $grid->rent_num;
             $grid->client_id->using(ClientDetailModel::dataOptions(['id','client_name']));
 
             $grid->car_type->using(AdminIndustry::dataOptions(['id','title'],['parent_id'=>5]));
             $grid->car_id->using(CarsModel::dataOptions(['id','car_num']));
+            $grid->is_secd->using([0=>'否',1=>'是']);
+            $grid->secd_money;
             $grid->rent_type->using(AdminIndustry::dataOptions(['id','title'],['parent_id'=>19]));
             $grid->staff_id->using(DriverDetailModel::dataOptions(['id','name'],['staff_type'=>31]));
             $grid->rent_at;
@@ -173,6 +176,10 @@ class RentCarController extends AdminController
 
             $form->select('car_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>5]))->load('car_id', '/getcars')->required();
             $form->select('car_id')->required();
+            $form->radio('is_secd')->options([0=>'否',1=>'是'])->default(0);
+            $form->currency('secd_money')->symbol("元")->saving(function ($v){
+                return empty($v) ? 0 :  str_replace(',','',$v);
+            });
             $form->radio('rent_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>19]))->default(20)->required();
             $form->select('staff_id')->options(DriverDetailModel::dataOptions(['id','name'],['staff_type'=>31]));
             $form->datetime('rent_at')->default(date('Y-m-d H:i:s'));
@@ -231,6 +238,12 @@ class RentCarController extends AdminController
                         $logModel->remark = "系统扣除";
                         if ($logModel->save()){
                             RentCarModel::where('id',$form->getKey())->update(['rent'=>($rent - $deduction_num)]);
+                        }
+                    }
+                    if ($form->is_secd==1){
+                        $cars = CarsModel::where('id',$form->car_id)->first();
+                        if ($cars){
+                            RentCarModel::where('id',$form->id)->update(['secd_company'=>$cars['cp_id']]);
                         }
                     }
                 }

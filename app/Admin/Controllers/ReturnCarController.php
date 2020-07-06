@@ -11,6 +11,7 @@ use App\Models\DriverDetailModel;
 use App\Models\RentCarModel;
 use App\Models\RentCompanyModel;
 use App\Models\ReturnCarModel;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -34,28 +35,121 @@ class ReturnCarController extends AdminController
 
         return Grid::make(new ReturnCar(), function (Grid $grid) {
             $grid->id->sortable();
-            $grid->rent_id->using(RentCarModel::dataOptions(['id','rent_num']));
-            $grid->is_checkout->using([0=>'未结帐',1=>'已结帐']);
-            $grid->return_at;
-            $grid->return_mileage->display(function ($item){
-                return $item."/Km";
+            $grid->rent_id->using(RentCarModel::dataOptions(['id','rent_num']))->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
             });
-            $grid->return_oil;
-            $grid->is_odrive->using([0=>'未超驶',1=>'超驶']);
-            $grid->is_time->using([0=>'未超时',1=>'超时']);
+            $grid->is_checkout->using([0=>'未结帐',1=>'已结帐'])->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
+            });;
+            $grid->return_at->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
+            });;
+            $grid->return_mileage->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item} /Km</span>";
+                }else{
+                    return $item."/Km";
+                }
+            });
+            $grid->return_oil->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
+            });;
+            $grid->is_odrive->using([0=>'未超驶',1=>'超驶'])->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
+            });;
+            $grid->is_time->using([0=>'未超时',1=>'超时'])->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
+            });;
             $grid->oy_price->display(function ($item){
-                return $item."/元";
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item} /元</span>";
+                }else{
+                    return $item."/元";
+                }
             });
             $grid->wz_deposit->display(function ($item){
-                return $item."/元";
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item} /元</span>";
+                }else{
+                    return $item."/元";
+                }
             });
             $grid->receivable->display(function ($item){
-                return $item."/元";
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item} /元</span>";
+                }else{
+                    return $item."/元";
+                }
             });
             $grid->paid->display(function ($item){
-                return $item."/元";
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item} /元</span>";
+                }else{
+                    return $item."/元";
+                }
             });
-            $grid->remark->responsive(0);
+            $grid->column('refund')->display("编辑")->modal(function ($modal) {
+                // 设置弹窗标题
+                $modal->title('返款记录');
+                $html = "<div>
+                            <div class=\"form-group row form-field \">
+                              <div class=\"col-md-2  text-capitalize control-label\">
+                                <span>返款金额</span></div>
+                              <div class=\"col-md-8\">
+                                <div class=\"help-block with-errors\"></div>
+                                <div class=\"input-group\">
+                                  <div class=\"input-group\">
+                                    <input style=\"text-align: center;\" type=\"number\" value=\"".$this->refund."\" id='remoney'  class=\" remoney form-control paid initialized\" placeholder=\"输入 返款金额\">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class=\"form-group row form-field \">
+                                <label for=\"form-field-remark-GmN1F\" class=\"col-md-2  text-capitalize control-label\">返款备注</label>
+                                <div class=\"col-md-8\">
+                                    <div class=\"help-block with-errors\"></div>
+                                    <textarea  class=\"form-control remark refmark\" id='refmark' rows=\"5\" placeholder=\"输入 返款备注\">".$this->refund_mark."</textarea>  
+                                </div>
+                            </div>
+                            <div class=\"btn-group\" style=\"margin-left:40%;\">
+                                <input type='hidden' value='".$this->id."' class='ret_id' id='ret_id' />
+                                <button class=\"btn btn-primary submit refund_btn \" '><i class=\"feather icon-save\"></i> 提交</button>
+                            </div>
+                        </div>";
+                return $html;
+            });
+
+            $grid->remark->responsive(0)->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item}</span>";
+                }else{
+                    return $item;
+                }
+            });;
             $grid->column('illega','违章记录')->display(function ($item)use ($grid){
                 $rent = RentCarModel::where('id',$this->rent_id)->first();
                 return "<span class='create-form' data-url='illegalog/create?id={$this->id}&rid={$this->rent_id}&cid={$rent->car_id}&sid={$rent->staff_id}' title='新增违章记录'><i class='fa  fa-cogs'></i></span>";
@@ -98,6 +192,44 @@ class ReturnCarController extends AdminController
                 $filter->equal('id');
 
             });
+
+            Admin::script(<<<SCRIPT
+                
+                $(".refund_btn").on('click',function(e){
+                 var modal = $('.show').attr('id');
+                  var id = $("#ret_id").val();
+                  var refund = $("#remoney").val();
+                  var remark = $("#refmark").val();
+                  console.log(modal);
+                      if(refund =='' || refund == '0'){
+                        layer.alert('请填写返款金额!', {
+                          icon: 1,
+                          skin: 'layer-ext-moon'
+                        });
+                        return false;
+                      }
+                       $.ajax({
+                        method: 'get',
+                        dataType:"json",
+                        url: '/admin/refund',
+                        data:{
+                            id:id,
+                            refund:refund,
+                            remark:remark
+                        },
+                        success: function (res) {
+                            if(res.status){
+                               layer.alert('添加成功!', {
+                                  icon: 1,
+                                  skin: 'layer-ext-moon'
+                                });
+                                $("#"+modal).modal('hide')
+                            }
+                        }
+                    });
+                });
+SCRIPT
+            );
         });
     }
 
@@ -152,5 +284,21 @@ class ReturnCarController extends AdminController
             $form->display('created_at');
             $form->display('updated_at');
         });
+    }
+
+    protected function refund(){
+        $id = intval(request()->get('id'));
+        $refund = trim(request()->get('refund'));
+        $remark = trim(request()->get('remark'));
+        if ($id){
+            $res = ReturnCarModel::where('id',$id)->update(['refund'=>$refund,'refund_mark'=>$remark]);
+            if ($res){
+                return json_encode(['status'=>1,'msg'=>'添加成功!']);
+            }else{
+                return json_encode(['status'=>0,'msg'=>'添加失败!']);
+            }
+        }else{
+            return json_encode(['status'=>1,'msg'=>'添加失败!']);
+        }
     }
 }

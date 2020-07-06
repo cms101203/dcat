@@ -11,6 +11,8 @@ return [
         'current_mileage' => '当前里程',
         'car_type' => '汽车类型',
         'car_id' => '选择车辆',
+        'is_secd' =>'借调',
+        'secd_money' =>'借调费',
         'rent_type' => '租赁方式',
         'rent_at' => '租赁时间',
         'rent_day' => '预租天数',

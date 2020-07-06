@@ -40,6 +40,7 @@ Route::group([
     //租金记录
     $router->resource('/rentcarslog', RentCarDeductionLogController::class);
     //还车记录
+    $router->any('/refund','ReturnCarController@refund')->name('admin.returncars.refund');
     $router->resource('/returncars', ReturnCarController::class);
     //公司管理
     $router->resource('/companys', RentCompanyController::class);
