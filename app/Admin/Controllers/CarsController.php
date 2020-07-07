@@ -120,6 +120,7 @@ class CarsController extends AdminController
                 ->height('500px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
 
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('car_type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']));

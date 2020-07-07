@@ -40,6 +40,7 @@ class CarInsuranceLogController extends AdminController
             });
             $grid->disableCreateButton();
 
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>27]));
                 $filter->equal('cars_id','所属汽车')->select(CarsModel::dataOptions(['id','car_num']));

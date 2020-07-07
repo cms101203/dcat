@@ -111,6 +111,7 @@ class RentCarController extends AdminController
             $grid->created_at->responsive(0);
             $grid->updated_at->sortable();
 
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->like('rent_num');

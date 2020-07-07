@@ -91,7 +91,7 @@ class ReturnCarController extends AdminController
                 }else{
                     return $item."/km";
                 }
-            });;
+            });
             $grid->outime_num->display(function ($item){
                 if ($this->is_checkout==0){
                     return "<span style='color: red'>{$item} 小时</span>";
@@ -114,7 +114,7 @@ class ReturnCarController extends AdminController
                     $titles = ['费用名称','费用金额','备注'];
                     return Table::make($titles, $cost_jsons);
                 }
-            });;
+            });
             $grid->wz_deposit->display(function ($item){
                 if ($this->is_checkout==0){
                     return "<span style='color: red'>{$item} /元</span>";
@@ -317,7 +317,7 @@ SCRIPT
                 return json_encode($cost_json);
             })->saving(function ($v) {
                 return json_encode($v);
-            })->attribute(['']);
+            });
 
             $form->number('receivable');
             $form->number('paid');

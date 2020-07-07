@@ -40,6 +40,8 @@ class DriverWageController extends AdminController
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 $actions->disableView();
             });
+
+            $grid->withBorder();
             $grid->disableCreateButton();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('staff_id')->select(DriverDetailModel::dataOptions(['id','name']));

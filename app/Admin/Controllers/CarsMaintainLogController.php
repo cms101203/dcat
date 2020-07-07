@@ -39,6 +39,8 @@ class CarsMaintainLogController extends AdminController
                 $actions->disableView();
             });
             $grid->disableCreateButton();
+
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>23]));
                 $filter->equal('cars_id','所属汽车')->select(CarsModel::dataOptions(['id','car_num']));

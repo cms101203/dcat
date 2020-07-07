@@ -36,6 +36,8 @@ class CarsServiceLogController extends AdminController
                 $actions->disableView();
             });
             $grid->disableCreateButton();
+
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
 
                 $filter->equal('cars_id','所属汽车')->select(CarsModel::dataOptions(['id','car_num']));

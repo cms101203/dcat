@@ -31,6 +31,7 @@ class StaffLeaveController extends AdminController
             $grid->created_at;
             $grid->updated_at->sortable();
 
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
 

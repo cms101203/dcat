@@ -116,6 +116,7 @@ class DriverDetailController extends AdminController
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
             $grid->created_at;
 
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->ilike('name');

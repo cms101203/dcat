@@ -37,7 +37,8 @@ class CarsIllegalLogController extends AdminController
             $grid->remark->responsive(0);;
             $grid->created_at->responsive(0);;
             $grid->updated_at->sortable();
-        
+
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('rent_id')->select(RentCarModel::dataOptions(['id','rent_num']));
                 $filter->equal('car_id')->select(CarsModel::dataOptions(['id','car_num']));

@@ -29,6 +29,7 @@ class ClientDetailController extends AdminController
             $grid->id_card;
             $grid->created_at;
 
+            $grid->withBorder();
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->like('client_name');
