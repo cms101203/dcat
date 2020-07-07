@@ -47,6 +47,9 @@ Route::group([
     //违章管理
     $router->resource('/illegalog', CarsIllegalLogController::class);
 
+    //预支记录
+    $router->resource('/advance', RentCarAdvanceLogController::class);
+
     $router->group([//用户管理
         'namespace' => 'Auth',
     ], function($router) {

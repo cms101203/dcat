@@ -7,6 +7,7 @@ use App\Models\AdminIndustry;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
 use App\Models\DriverDetailModel;
+use App\Models\RentCarAdvanceLogModel;
 use App\Models\RentCarDeductionLogModel;
 use App\Models\RentCarModel;
 use Dcat\Admin\Admin;
@@ -71,9 +72,33 @@ class RentCarController extends AdminController
                 }
 
             });
+
+            $grid->column('advance','预支记录')->display(function ($item)use ($grid){
+                return "<span class='create-advance-form' data-url='advance/create?id={$this->id}' title='新增预支记录'><i class='feather  icon-tag'></i></span>";
+            })->expand(function ($model){
+                $byarr = [];
+                $bylist = RentCarAdvanceLogModel::where('rent_id',$this->id)->orderBy('id', 'desc')->get(['money','advance_at','remark'])->toArray();
+                if (!empty($bylist)){
+
+                    foreach ($bylist as $k=>$v){
+                        $byarr[$k]['advance_at'] = $v['advance_at'];
+                        $byarr[$k]['money'] = $v['money'];
+                        $byarr[$k]['remark'] = $v['remark'];
+                    }
+                    return new Table(['预支时间','预支金额','备注'],$byarr);
+                }
+
+            });
             $grid->column('returncar','还车')->display(function ($item)use($grid){
                 return "<a href='/admin/returncars/create?id=".$this->id."'>还车</a>";
             });
+
+            Form::dialog('新增预支记录')
+                ->click('.create-advance-form') // 绑定点击按钮
+                ->url('advance/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
 
             Form::dialog('新增租金记录')
                 ->click('.create-form') // 绑定点击按钮
@@ -81,6 +106,7 @@ class RentCarController extends AdminController
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
                 ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
+
             $grid->created_at->responsive(0);
             $grid->updated_at->sortable();
 

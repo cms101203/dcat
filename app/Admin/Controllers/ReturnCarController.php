@@ -21,6 +21,7 @@ use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Widgets\Table;
+use Dcat\Admin\Form\NestedForm;
 
 class ReturnCarController extends AdminController
 {
@@ -84,13 +85,36 @@ class ReturnCarController extends AdminController
                     return $item;
                 }
             });;
-            $grid->oy_price->display(function ($item){
+            $grid->kilometers->display(function ($item){
                 if ($this->is_checkout==0){
-                    return "<span style='color: red'>{$item} /元</span>";
+                    return "<span style='color: red'>{$item} /km</span>";
                 }else{
-                    return $item."/元";
+                    return $item."/km";
+                }
+            });;
+            $grid->outime_num->display(function ($item){
+                if ($this->is_checkout==0){
+                    return "<span style='color: red'>{$item} 小时</span>";
+                }else{
+                    return $item."　小时";
                 }
             });
+            $grid->cost_json->display("费用明细")->expand(function ($modal) {
+                $cost_json = !empty($this->cost_json) ? json_decode($this->cost_json,true) : [];
+
+
+                if ($cost_json){
+                    $cost_jsons = [];
+                    foreach ($cost_json as $k=>$item) {
+                        $cost_jsons[$k]['title'] = isset($item['title']) ? $item['title'] : '--';
+                        $cost_jsons[$k]['money'] = isset($item['money']) ? $item['money']."元" : '--';
+                        $cost_jsons[$k]['desc'] = isset($item['desc']) ? $item['desc'] : '--';
+                    }
+
+                    $titles = ['费用名称','费用金额','备注'];
+                    return Table::make($titles, $cost_jsons);
+                }
+            });;
             $grid->wz_deposit->display(function ($item){
                 if ($this->is_checkout==0){
                     return "<span style='color: red'>{$item} /元</span>";
@@ -193,6 +217,9 @@ class ReturnCarController extends AdminController
 
             });
 
+            $grid->withBorder();
+//            $grid->fixColumns(2);
+
             Admin::script(<<<SCRIPT
                 
                 $(".refund_btn").on('click',function(e){
@@ -273,9 +300,25 @@ SCRIPT
             $form->number('return_mileage');
             $form->text('return_oil')->default('满格');
             $form->radio('is_odrive')->options([0=>'未超驶',1=>'超驶'])->default(0);
+            $form->number('kilometers');
             $form->radio('is_time')->options([0=>'未超时',1=>'超时'])->default(0);
-            $form->number('oy_price');
+            $form->number('outime_num')->help("按小时数添加");
             $form->number('wz_deposit');
+            $form->table('cost_json', function (NestedForm $table) {
+                $table->text('title','费用名称');
+                $table->number('money','费用金额');
+                $table->text('desc','费用说明');
+            })->default(function (){
+                $cost_fied = ['超公里费','超时费','亏油费','油费','过路费','饭费','住宿费','停车费','洗车费'];
+                $cost_json = [];
+                foreach ($cost_fied as $k=>$v){
+                    $cost_json[$k] = ['title'=>$v,'money'=>'0','desc'=>''];
+                }
+                return json_encode($cost_json);
+            })->saving(function ($v) {
+                return json_encode($v);
+            });
+
             $form->number('receivable');
             $form->number('paid');
             $form->textarea('remark');
