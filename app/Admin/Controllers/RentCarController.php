@@ -7,6 +7,7 @@ use App\Models\AdminIndustry;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
 use App\Models\DriverDetailModel;
+use App\Models\DriverGetoutLogModel;
 use App\Models\RentCarAdvanceLogModel;
 use App\Models\RentCarDeductionLogModel;
 use App\Models\RentCarModel;
@@ -208,6 +209,8 @@ class RentCarController extends AdminController
             });
             $form->radio('rent_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>19]))->default(20)->required();
             $form->select('staff_id')->options(DriverDetailModel::dataOptions(['id','name'],['staff_type'=>31]));
+            $form->datetime('outs_at');
+            $form->datetime('oute_at');
             $form->datetime('rent_at')->default(date('Y-m-d H:i:s'));
             $form->radio('timexz','快捷选择预租天数')->options([1=>'一个月',2=>'一年']);
             $form->number('rent_day')->default(1);
@@ -271,6 +274,23 @@ class RentCarController extends AdminController
                         if ($cars){
                             RentCarModel::where('id',$form->id)->update(['secd_company'=>$cars['cp_id']]);
                         }
+                    }
+                }
+                if ($form->staff_id){
+                    $outcheck = DriverGetoutLogModel::where('rent_id',$form->id)->where('car_id',$form->car_id)->where('staff_id',$form->staff_id)->first();
+                    if ($outcheck){
+                        if ($outcheck['oute_at'] != $form->oute_at){
+                            DriverGetoutLogModel::where()->update(['oute_at'=>$form->oute_at]);
+                        }
+                    }else{
+                        $outdata = [];
+                        $outdata['rent_id'] = $form->model()->id;
+                        $outdata['staff_id'] = $form->staff_id;
+                        $outdata['outs_at'] = $form->outs_at;
+                        $outdata['oute_at'] = $form->oute_at;
+                        $outdata['car_id'] = $form->car_id;
+                        $outdata['op_id'] = auth('admin')->user()->id;
+                        DriverGetoutLogModel::insertGetId($outdata);
                     }
                 }
             });

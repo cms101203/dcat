@@ -306,7 +306,7 @@ SCRIPT
             $form->number('wz_deposit');
             $form->table('cost_json', function (NestedForm $table) {
                 $table->text('title','费用名称');
-                $table->number('money','费用金额');
+                $table->text('money','费用金额');
                 $table->text('desc','费用说明');
             })->default(function (){
                 $cost_fied = ['超公里费','超时费','亏油费','油费','过路费','饭费','住宿费','停车费','洗车费'];
@@ -317,7 +317,7 @@ SCRIPT
                 return json_encode($cost_json);
             })->saving(function ($v) {
                 return json_encode($v);
-            });
+            })->attribute(['']);
 
             $form->number('receivable');
             $form->number('paid');

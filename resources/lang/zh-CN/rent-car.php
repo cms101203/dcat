@@ -15,6 +15,8 @@ return [
         'secd_money' =>'借调费',
         'rent_type' => '租赁方式',
         'rent_at' => '租赁时间',
+        'outs_at' => '出车时间',
+        'oute_at' => '回车时间',
         'rent_day' => '预租天数',
         'deposit' => '已交押金',
         'rent' => '已付租金',

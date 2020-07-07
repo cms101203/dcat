@@ -42,6 +42,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection prove_img
      * @property Grid\Column|Collection car_type
      * @property Grid\Column|Collection car_num
+     * @property Grid\Column|Collection cp_id
      * @property Grid\Column|Collection inspection_at
      * @property Grid\Column|Collection hinsure_at
      * @property Grid\Column|Collection binsure_at
@@ -59,6 +60,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection pay_money
      * @property Grid\Column|Collection cars_id
      * @property Grid\Column|Collection mobile
+     * @property Grid\Column|Collection license
      * @property Grid\Column|Collection staff_status
      * @property Grid\Column|Collection driver_status
      * @property Grid\Column|Collection staff_type
@@ -82,6 +84,8 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection rent_num
      * @property Grid\Column|Collection client_id
      * @property Grid\Column|Collection car_id
+     * @property Grid\Column|Collection is_secd
+     * @property Grid\Column|Collection secd_money
      * @property Grid\Column|Collection rent_type
      * @property Grid\Column|Collection rent_at
      * @property Grid\Column|Collection rent_day
@@ -101,6 +105,28 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection deposit_money
      * @property Grid\Column|Collection deposit_over
      * @property Grid\Column|Collection next_at
+     * @property Grid\Column|Collection is_checkout
+     * @property Grid\Column|Collection return_at
+     * @property Grid\Column|Collection return_mileage
+     * @property Grid\Column|Collection return_oil
+     * @property Grid\Column|Collection is_odrive
+     * @property Grid\Column|Collection is_time
+     * @property Grid\Column|Collection kilometers
+     * @property Grid\Column|Collection outime_num
+     * @property Grid\Column|Collection cost_json
+     * @property Grid\Column|Collection wz_deposit
+     * @property Grid\Column|Collection receivable
+     * @property Grid\Column|Collection paid
+     * @property Grid\Column|Collection fixColumns
+     * @property Grid\Column|Collection contact
+     * @property Grid\Column|Collection phone
+     * @property Grid\Column|Collection address
+     * @property Grid\Column|Collection bits
+     * @property Grid\Column|Collection money
+     * @property Grid\Column|Collection illegal_at
+     * @property Grid\Column|Collection advance_at
+     * @property Grid\Column|Collection outs_at
+     * @property Grid\Column|Collection oute_at
      * @property Grid\Column|Collection parent_id
      * @property Grid\Column|Collection order
      * @property Grid\Column|Collection icon
@@ -114,7 +140,6 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection role_id
      * @property Grid\Column|Collection password
      * @property Grid\Column|Collection remember_token
-     * @property Grid\Column|Collection cp_id
      * @property Grid\Column|Collection by_mileage
      * @property Grid\Column|Collection pd_mileage
      * @property Grid\Column|Collection cly_mileage
@@ -122,6 +147,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection pd_status
      * @property Grid\Column|Collection cly_status
      * @property Grid\Column|Collection car_status
+     * @property Grid\Column|Collection return_id
+     * @property Grid\Column|Collection offset_car
+     * @property Grid\Column|Collection offset_money
      * @property Grid\Column|Collection start_at
      * @property Grid\Column|Collection end_at
      * @property Grid\Column|Collection connection
@@ -129,6 +157,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection payload
      * @property Grid\Column|Collection exception
      * @property Grid\Column|Collection failed_at
+     * @property Grid\Column|Collection secd_company
+     * @property Grid\Column|Collection refund
+     * @property Grid\Column|Collection refund_mark
      * @property Grid\Column|Collection email
      * @property Grid\Column|Collection email_verified_at
      *
@@ -163,6 +194,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection prove_img(string $label = null)
      * @method Grid\Column|Collection car_type(string $label = null)
      * @method Grid\Column|Collection car_num(string $label = null)
+     * @method Grid\Column|Collection cp_id(string $label = null)
      * @method Grid\Column|Collection inspection_at(string $label = null)
      * @method Grid\Column|Collection hinsure_at(string $label = null)
      * @method Grid\Column|Collection binsure_at(string $label = null)
@@ -180,6 +212,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection pay_money(string $label = null)
      * @method Grid\Column|Collection cars_id(string $label = null)
      * @method Grid\Column|Collection mobile(string $label = null)
+     * @method Grid\Column|Collection license(string $label = null)
      * @method Grid\Column|Collection staff_status(string $label = null)
      * @method Grid\Column|Collection driver_status(string $label = null)
      * @method Grid\Column|Collection staff_type(string $label = null)
@@ -203,6 +236,8 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection rent_num(string $label = null)
      * @method Grid\Column|Collection client_id(string $label = null)
      * @method Grid\Column|Collection car_id(string $label = null)
+     * @method Grid\Column|Collection is_secd(string $label = null)
+     * @method Grid\Column|Collection secd_money(string $label = null)
      * @method Grid\Column|Collection rent_type(string $label = null)
      * @method Grid\Column|Collection rent_at(string $label = null)
      * @method Grid\Column|Collection rent_day(string $label = null)
@@ -222,6 +257,28 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection deposit_money(string $label = null)
      * @method Grid\Column|Collection deposit_over(string $label = null)
      * @method Grid\Column|Collection next_at(string $label = null)
+     * @method Grid\Column|Collection is_checkout(string $label = null)
+     * @method Grid\Column|Collection return_at(string $label = null)
+     * @method Grid\Column|Collection return_mileage(string $label = null)
+     * @method Grid\Column|Collection return_oil(string $label = null)
+     * @method Grid\Column|Collection is_odrive(string $label = null)
+     * @method Grid\Column|Collection is_time(string $label = null)
+     * @method Grid\Column|Collection kilometers(string $label = null)
+     * @method Grid\Column|Collection outime_num(string $label = null)
+     * @method Grid\Column|Collection cost_json(string $label = null)
+     * @method Grid\Column|Collection wz_deposit(string $label = null)
+     * @method Grid\Column|Collection receivable(string $label = null)
+     * @method Grid\Column|Collection paid(string $label = null)
+     * @method Grid\Column|Collection fixColumns(string $label = null)
+     * @method Grid\Column|Collection contact(string $label = null)
+     * @method Grid\Column|Collection phone(string $label = null)
+     * @method Grid\Column|Collection address(string $label = null)
+     * @method Grid\Column|Collection bits(string $label = null)
+     * @method Grid\Column|Collection money(string $label = null)
+     * @method Grid\Column|Collection illegal_at(string $label = null)
+     * @method Grid\Column|Collection advance_at(string $label = null)
+     * @method Grid\Column|Collection outs_at(string $label = null)
+     * @method Grid\Column|Collection oute_at(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
      * @method Grid\Column|Collection order(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
@@ -235,7 +292,6 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection role_id(string $label = null)
      * @method Grid\Column|Collection password(string $label = null)
      * @method Grid\Column|Collection remember_token(string $label = null)
-     * @method Grid\Column|Collection cp_id(string $label = null)
      * @method Grid\Column|Collection by_mileage(string $label = null)
      * @method Grid\Column|Collection pd_mileage(string $label = null)
      * @method Grid\Column|Collection cly_mileage(string $label = null)
@@ -243,6 +299,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection pd_status(string $label = null)
      * @method Grid\Column|Collection cly_status(string $label = null)
      * @method Grid\Column|Collection car_status(string $label = null)
+     * @method Grid\Column|Collection return_id(string $label = null)
+     * @method Grid\Column|Collection offset_car(string $label = null)
+     * @method Grid\Column|Collection offset_money(string $label = null)
      * @method Grid\Column|Collection start_at(string $label = null)
      * @method Grid\Column|Collection end_at(string $label = null)
      * @method Grid\Column|Collection connection(string $label = null)
@@ -250,6 +309,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection payload(string $label = null)
      * @method Grid\Column|Collection exception(string $label = null)
      * @method Grid\Column|Collection failed_at(string $label = null)
+     * @method Grid\Column|Collection secd_company(string $label = null)
+     * @method Grid\Column|Collection refund(string $label = null)
+     * @method Grid\Column|Collection refund_mark(string $label = null)
      * @method Grid\Column|Collection email(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
      */
@@ -289,6 +351,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection prove_img
      * @property Show\Field|Collection car_type
      * @property Show\Field|Collection car_num
+     * @property Show\Field|Collection cp_id
      * @property Show\Field|Collection inspection_at
      * @property Show\Field|Collection hinsure_at
      * @property Show\Field|Collection binsure_at
@@ -306,6 +369,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection pay_money
      * @property Show\Field|Collection cars_id
      * @property Show\Field|Collection mobile
+     * @property Show\Field|Collection license
      * @property Show\Field|Collection staff_status
      * @property Show\Field|Collection driver_status
      * @property Show\Field|Collection staff_type
@@ -329,6 +393,8 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection rent_num
      * @property Show\Field|Collection client_id
      * @property Show\Field|Collection car_id
+     * @property Show\Field|Collection is_secd
+     * @property Show\Field|Collection secd_money
      * @property Show\Field|Collection rent_type
      * @property Show\Field|Collection rent_at
      * @property Show\Field|Collection rent_day
@@ -348,6 +414,28 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection deposit_money
      * @property Show\Field|Collection deposit_over
      * @property Show\Field|Collection next_at
+     * @property Show\Field|Collection is_checkout
+     * @property Show\Field|Collection return_at
+     * @property Show\Field|Collection return_mileage
+     * @property Show\Field|Collection return_oil
+     * @property Show\Field|Collection is_odrive
+     * @property Show\Field|Collection is_time
+     * @property Show\Field|Collection kilometers
+     * @property Show\Field|Collection outime_num
+     * @property Show\Field|Collection cost_json
+     * @property Show\Field|Collection wz_deposit
+     * @property Show\Field|Collection receivable
+     * @property Show\Field|Collection paid
+     * @property Show\Field|Collection fixColumns
+     * @property Show\Field|Collection contact
+     * @property Show\Field|Collection phone
+     * @property Show\Field|Collection address
+     * @property Show\Field|Collection bits
+     * @property Show\Field|Collection money
+     * @property Show\Field|Collection illegal_at
+     * @property Show\Field|Collection advance_at
+     * @property Show\Field|Collection outs_at
+     * @property Show\Field|Collection oute_at
      * @property Show\Field|Collection parent_id
      * @property Show\Field|Collection order
      * @property Show\Field|Collection icon
@@ -361,7 +449,6 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection role_id
      * @property Show\Field|Collection password
      * @property Show\Field|Collection remember_token
-     * @property Show\Field|Collection cp_id
      * @property Show\Field|Collection by_mileage
      * @property Show\Field|Collection pd_mileage
      * @property Show\Field|Collection cly_mileage
@@ -369,6 +456,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection pd_status
      * @property Show\Field|Collection cly_status
      * @property Show\Field|Collection car_status
+     * @property Show\Field|Collection return_id
+     * @property Show\Field|Collection offset_car
+     * @property Show\Field|Collection offset_money
      * @property Show\Field|Collection start_at
      * @property Show\Field|Collection end_at
      * @property Show\Field|Collection connection
@@ -376,6 +466,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection payload
      * @property Show\Field|Collection exception
      * @property Show\Field|Collection failed_at
+     * @property Show\Field|Collection secd_company
+     * @property Show\Field|Collection refund
+     * @property Show\Field|Collection refund_mark
      * @property Show\Field|Collection email
      * @property Show\Field|Collection email_verified_at
      *
@@ -410,6 +503,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection prove_img(string $label = null)
      * @method Show\Field|Collection car_type(string $label = null)
      * @method Show\Field|Collection car_num(string $label = null)
+     * @method Show\Field|Collection cp_id(string $label = null)
      * @method Show\Field|Collection inspection_at(string $label = null)
      * @method Show\Field|Collection hinsure_at(string $label = null)
      * @method Show\Field|Collection binsure_at(string $label = null)
@@ -427,6 +521,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection pay_money(string $label = null)
      * @method Show\Field|Collection cars_id(string $label = null)
      * @method Show\Field|Collection mobile(string $label = null)
+     * @method Show\Field|Collection license(string $label = null)
      * @method Show\Field|Collection staff_status(string $label = null)
      * @method Show\Field|Collection driver_status(string $label = null)
      * @method Show\Field|Collection staff_type(string $label = null)
@@ -450,6 +545,8 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection rent_num(string $label = null)
      * @method Show\Field|Collection client_id(string $label = null)
      * @method Show\Field|Collection car_id(string $label = null)
+     * @method Show\Field|Collection is_secd(string $label = null)
+     * @method Show\Field|Collection secd_money(string $label = null)
      * @method Show\Field|Collection rent_type(string $label = null)
      * @method Show\Field|Collection rent_at(string $label = null)
      * @method Show\Field|Collection rent_day(string $label = null)
@@ -469,6 +566,28 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection deposit_money(string $label = null)
      * @method Show\Field|Collection deposit_over(string $label = null)
      * @method Show\Field|Collection next_at(string $label = null)
+     * @method Show\Field|Collection is_checkout(string $label = null)
+     * @method Show\Field|Collection return_at(string $label = null)
+     * @method Show\Field|Collection return_mileage(string $label = null)
+     * @method Show\Field|Collection return_oil(string $label = null)
+     * @method Show\Field|Collection is_odrive(string $label = null)
+     * @method Show\Field|Collection is_time(string $label = null)
+     * @method Show\Field|Collection kilometers(string $label = null)
+     * @method Show\Field|Collection outime_num(string $label = null)
+     * @method Show\Field|Collection cost_json(string $label = null)
+     * @method Show\Field|Collection wz_deposit(string $label = null)
+     * @method Show\Field|Collection receivable(string $label = null)
+     * @method Show\Field|Collection paid(string $label = null)
+     * @method Show\Field|Collection fixColumns(string $label = null)
+     * @method Show\Field|Collection contact(string $label = null)
+     * @method Show\Field|Collection phone(string $label = null)
+     * @method Show\Field|Collection address(string $label = null)
+     * @method Show\Field|Collection bits(string $label = null)
+     * @method Show\Field|Collection money(string $label = null)
+     * @method Show\Field|Collection illegal_at(string $label = null)
+     * @method Show\Field|Collection advance_at(string $label = null)
+     * @method Show\Field|Collection outs_at(string $label = null)
+     * @method Show\Field|Collection oute_at(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
      * @method Show\Field|Collection order(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
@@ -482,7 +601,6 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection role_id(string $label = null)
      * @method Show\Field|Collection password(string $label = null)
      * @method Show\Field|Collection remember_token(string $label = null)
-     * @method Show\Field|Collection cp_id(string $label = null)
      * @method Show\Field|Collection by_mileage(string $label = null)
      * @method Show\Field|Collection pd_mileage(string $label = null)
      * @method Show\Field|Collection cly_mileage(string $label = null)
@@ -490,6 +608,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection pd_status(string $label = null)
      * @method Show\Field|Collection cly_status(string $label = null)
      * @method Show\Field|Collection car_status(string $label = null)
+     * @method Show\Field|Collection return_id(string $label = null)
+     * @method Show\Field|Collection offset_car(string $label = null)
+     * @method Show\Field|Collection offset_money(string $label = null)
      * @method Show\Field|Collection start_at(string $label = null)
      * @method Show\Field|Collection end_at(string $label = null)
      * @method Show\Field|Collection connection(string $label = null)
@@ -497,6 +618,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection payload(string $label = null)
      * @method Show\Field|Collection exception(string $label = null)
      * @method Show\Field|Collection failed_at(string $label = null)
+     * @method Show\Field|Collection secd_company(string $label = null)
+     * @method Show\Field|Collection refund(string $label = null)
+     * @method Show\Field|Collection refund_mark(string $label = null)
      * @method Show\Field|Collection email(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
      */

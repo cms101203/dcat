@@ -5,7 +5,10 @@ namespace App\Admin\Controllers;
 use App\Admin\Repositories\DriverDetail;
 use App\Models\AdminIndustry;
 use App\Models\CarInsuranceLogModel;
+use App\Models\CarsModel;
+use App\Models\DriverGetoutLogModel;
 use App\Models\DriverWageModel;
+use App\Models\RentCarModel;
 use App\Models\StaffLeaveModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -71,6 +74,31 @@ class DriverDetailController extends AdminController
                     return new Table(['请假周期','请假天数','请假类型','备注'],$byarr);
                 }
             });
+            $grid->column('getout','出车记录')->display(function ($item)use ($grid){
+                return "<span class='create-getout-form' data-url='getout/create?id={$this->id}' title='新增出车记录'><i class='fa fa-plus'></i></span>";
+            })->expand(function ($model){
+                $byarr = [];
+                $list = DriverGetoutLogModel::where('staff_id',$this->id)->get()->toArray();
+                if ($list){
+                    foreach($list as $k=>$v){
+                        $rent = RentCarModel::where('id',$v['rent_id'])->first();
+                        $car = CarsModel::where('id',$v['car_id'])->first();
+                        $byarr[$k]['rent_num'] = $rent['rent_num'] ;
+                        $byarr[$k]['car'] = $car['car_num'];
+                        $byarr[$k]['outs_at'] = $v['outs_at'];
+                        $byarr[$k]['oute_at'] = $v['oute_at'];
+                    }
+
+                    return new Table(['出车订单','车牌号','出车时间','回车时间'],$byarr);
+                }
+            });
+
+            Form::dialog('新增出车记录')
+                ->click('.create-getout-form') // 绑定点击按钮
+                ->url('getout/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('750px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('820px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
 
             Form::dialog('新增工资')
                 ->click('.create-wage-form') // 绑定点击按钮
@@ -93,6 +121,7 @@ class DriverDetailController extends AdminController
                 $filter->ilike('name');
                 $filter->ilike('mobile');
                 $filter->ilike('id_card');
+                $filter->equal('staff_type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>30]));
                 $filter->equal('driver_status')->select([0=>'空闲中',1=>'工作中',2=>'休息中','3'=>'已离职']);
                 $filter->equal('type')->select([1=>'本公司',2=>'外调']);
 
