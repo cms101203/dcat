@@ -31,7 +31,7 @@ class CarsController extends AdminController
         return Grid::make(new Cars(), function (Grid $grid) {
             $grid->id->sortable();
             $grid->column('car_status','车辆状态')->using([0=>'空闲中',1=>'租赁中',2=>'维修中']);
-            $grid->car_type;
+            $grid->car_type->using(AdminIndustry::dataOptions(['id','title'],['parent_id'=>5]));
             $grid->car_num;
             $grid->cp_id->using(RentCompanyModel::dataOptions(['id','title']));
             $grid->inspection_at->display(function ($item){
