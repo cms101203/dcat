@@ -218,7 +218,7 @@ class ReturnCarController extends AdminController
             });
 
             $grid->withBorder();
-//            $grid->fixColumns(2);
+            $grid->disableCreateButton();
 
             Admin::script(<<<SCRIPT
                 

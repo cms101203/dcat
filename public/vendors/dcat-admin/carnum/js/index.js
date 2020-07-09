@@ -62,9 +62,9 @@ function choosekey(obj, jj) {
                 layer.open({
                     content: '车牌第二位为字母',
                     skin: 'msg',
-                    time: 1
+                    time: 15
                 });
-                return
+                return false;
             }
             $(".input_pp:eq(" + next + ")").find("span").text($(obj).text());
             $(".input_pp:eq(" + next + ")").addClass("ppHas");
@@ -95,17 +95,19 @@ function getpai() {
 }
 window.onload = function() {
     $(".input_pro").click(function() {
+        console.log("2222");
         layer.open({
             type: 1,
             content: '<div id="pro"></div>',
             anim: 'up',
             shade: false,
-            style: 'position:fixed; bottom:0; left:0; width: 100%; height: auto; padding:0; border:none;'
+            style: 'position:fixed; bottom:100; left:0; width: 100%; height: auto; padding:0; border:none;'
         });
         showProvince()
     })
     $(".input_pp").click(function() {
         if ($(".input_pro").hasClass("hasPro")) {
+            console.log("3333");
             layer.open({
                 type: 1,
                 content: '<div id="pro"></div>',
