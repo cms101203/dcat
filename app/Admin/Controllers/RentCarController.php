@@ -11,6 +11,7 @@ use App\Models\DriverGetoutLogModel;
 use App\Models\RentCarAdvanceLogModel;
 use App\Models\RentCarDeductionLogModel;
 use App\Models\RentCarModel;
+use App\Models\TransferLogModel;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -87,6 +88,34 @@ class RentCarController extends AdminController
                         $byarr[$k]['remark'] = $v['remark'];
                     }
                     return new Table(['预支时间','预支金额','备注'],$byarr);
+                }
+
+            });
+
+            $grid->column('advance','换车记录')->display(function ($item)use ($grid){
+                return "<span class='create-advance-form' data-url='transferlog/create?id={$this->id}&uid={$this->client_id}&cid={$this->car_id}' title='新增换车记录'><i class='feather icon-repeat'></i></span>";
+            })->expand(function ($model){
+                $list = [];
+                $bylist = TransferLogModel::where('rent_id',$this->id)->orderBy('id', 'desc')->get()->toArray();
+                if (!empty($bylist)){
+                    $cartype = AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']);
+//                    dd($cartype);
+                    foreach ($bylist as $k=>$v){
+                        $list[$k]['transfer_at'] = $v['transfer_at'];
+                        $car = CarsModel::where('id',$v['car_id'])->first();
+                        $list[$k]['car_type'] = $cartype[$car['car_type']];
+                        $list[$k]['car_id'] = $car['car_num'];
+                        $list[$k]['mileages'] = $v['mileages'];
+                        $list[$k]['oils'] = $v['oils'];
+                        $cars = CarsModel::where('id',$v['transfer_id'])->first();
+
+                        $list[$k]['cars_type'] = $cartype[$cars['car_type']];
+                        $list[$k]['transfer_id'] = $cars['car_num'];
+                        $list[$k]['transfer_mileage'] = $v['transfer_mileage'];
+                        $list[$k]['transfer_oils'] = $v['transfer_oils'];
+                        $list[$k]['remark'] = $v['remark'];
+                    }
+                    return new Table(['换成时间','更换后车型','更换后车牌号','里程','油量','更换前车型','更换前车牌号','里程','油量','备注'],$list);
                 }
 
             });

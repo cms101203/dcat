@@ -11,17 +11,16 @@ use App\Models\DriverDetailModel;
 use App\Models\RentCarModel;
 use App\Models\RentCompanyModel;
 use App\Models\ReturnCarModel;
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 
-use Dcat\Admin\Layout\Column;
-use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Widgets\Table;
 use Dcat\Admin\Form\NestedForm;
+
+use Dcat\Admin\Admin;
+use Illuminate\Http\Request;
 
 class ReturnCarController extends AdminController
 {
@@ -136,35 +135,8 @@ class ReturnCarController extends AdminController
                     return $item."/元";
                 }
             });
-            $grid->column('refund')->display("编辑")->modal(function ($modal) {
-                // 设置弹窗标题
-                $modal->title('返款记录');
-                $html = "<div>
-                            <div class=\"form-group row form-field \">
-                              <div class=\"col-md-2  text-capitalize control-label\">
-                                <span>返款金额</span></div>
-                              <div class=\"col-md-8\">
-                                <div class=\"help-block with-errors\"></div>
-                                <div class=\"input-group\">
-                                  <div class=\"input-group\">
-                                    <input style=\"text-align: center;\" type=\"number\" value=\"".$this->refund."\" id='remoney'  class=\" remoney form-control paid initialized\" placeholder=\"输入 返款金额\">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class=\"form-group row form-field \">
-                                <label for=\"form-field-remark-GmN1F\" class=\"col-md-2  text-capitalize control-label\">返款备注</label>
-                                <div class=\"col-md-8\">
-                                    <div class=\"help-block with-errors\"></div>
-                                    <textarea  class=\"form-control remark refmark\" id='refmark' rows=\"5\" placeholder=\"输入 返款备注\">".$this->refund_mark."</textarea>  
-                                </div>
-                            </div>
-                            <div class=\"btn-group\" style=\"margin-left:40%;\">
-                                <input type='hidden' value='".$this->id."' class='ret_id' id='ret_id' />
-                                <button class=\"btn btn-primary submit refund_btn \" '><i class=\"feather icon-save\"></i> 提交</button>
-                            </div>
-                        </div>";
-                return $html;
+            $grid->column('refund')->display(function ($item)use ($grid){
+                return "<span class='edit-form' data-url='returncar/{$this->id}/edit' title='添加返款'><i class='feather icon-feather'></i></span>";
             });
 
             $grid->remark->responsive(0)->display(function ($item){
@@ -173,7 +145,7 @@ class ReturnCarController extends AdminController
                 }else{
                     return $item;
                 }
-            });;
+            });
             $grid->column('illega','违章记录')->display(function ($item)use ($grid){
                 $rent = RentCarModel::where('id',$this->rent_id)->first();
                 return "<span class='create-form' data-url='illegalog/create?id={$this->id}&rid={$this->rent_id}&cid={$rent->car_id}&sid={$rent->staff_id}' title='新增违章记录'><i class='fa  fa-cogs'></i></span>";
@@ -203,6 +175,14 @@ class ReturnCarController extends AdminController
 
             });
 
+
+            Form::dialog('返款记录')
+                ->click('.edit-form') // 绑定点击按钮
+                ->url('returncar') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
+
             Form::dialog('违章记录')
                 ->click('.create-form') // 绑定点击按钮
                 ->url('illegalog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
@@ -214,49 +194,12 @@ class ReturnCarController extends AdminController
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
+                $filter->between('return_at')->datetime();
 
             });
 
             $grid->withBorder();
             $grid->disableCreateButton();
-
-            Admin::script(<<<SCRIPT
-                
-                $(".refund_btn").on('click',function(e){
-                 var modal = $('.show').attr('id');
-                  var id = $("#ret_id").val();
-                  var refund = $("#remoney").val();
-                  var remark = $("#refmark").val();
-                  console.log(modal);
-                      if(refund =='' || refund == '0'){
-                        layer.alert('请填写返款金额!', {
-                          icon: 1,
-                          skin: 'layer-ext-moon'
-                        });
-                        return false;
-                      }
-                       $.ajax({
-                        method: 'get',
-                        dataType:"json",
-                        url: '/admin/refund',
-                        data:{
-                            id:id,
-                            refund:refund,
-                            remark:remark
-                        },
-                        success: function (res) {
-                            if(res.status){
-                               layer.alert('添加成功!', {
-                                  icon: 1,
-                                  skin: 'layer-ext-moon'
-                                });
-                                $("#"+modal).modal('hide')
-                            }
-                        }
-                    });
-                });
-SCRIPT
-            );
         });
     }
 
@@ -321,6 +264,8 @@ SCRIPT
 
             $form->number('receivable');
             $form->number('paid');
+            //支付类型1现金2银行卡3公对公4微信5支付宝'
+            $form->select('pay_type')->options([1=>'现金',2=>'银行卡',3=>'公对公',4=>'微信',5=>'支付宝']);
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
 
@@ -331,17 +276,51 @@ SCRIPT
 
     protected function refund(){
         $id = intval(request()->get('id'));
-        $refund = trim(request()->get('refund'));
-        $remark = trim(request()->get('remark'));
-        if ($id){
-            $res = ReturnCarModel::where('id',$id)->update(['refund'=>$refund,'refund_mark'=>$remark]);
-            if ($res){
-                return json_encode(['status'=>1,'msg'=>'添加成功!']);
-            }else{
-                return json_encode(['status'=>0,'msg'=>'添加失败!']);
-            }
-        }else{
-            return json_encode(['status'=>1,'msg'=>'添加失败!']);
+        $returncar = ReturnCarModel::where('id',$id)->first();
+        return Form::make($returncar, function (Form $form) use($returncar){
+            $form->hidden('id')->default($returncar['id']);
+            $form->radio('refund_pay_type')->options([1=>'现金',2=>'银行卡',3=>'公对公',4=>'微信',5=>'支付宝'])->default($returncar['refund_pay_type'])->required();
+            $time = $returncar['refund_at'] ? $returncar['refund_at'] : date('Y-m-d');
+            $form->date('refund_at')->default($time)->required();
+            $refund =  $returncar['refund'] ? $returncar['refund'] : 0;
+            $form->number('refund')->default($refund)->required();
+            $form->textarea('refund_remark')->default($returncar['refund_remark']);
+            $form->action("refundstore");
+
+
+            Admin::script("<<<SCRIPT
+            $(document).ready(function(){
+            
+                $('.layui-layer-btn0').on('click',function () {
+                    alert(\"ddd\");
+//                     console.log($(':radio[name=\"refund_pay_type\"]:checked').val());
+//                     return false;
+                });
+            });
+SCRIPT"
+            );
+        });
+    }
+
+    protected function refundstore(Request $request){
+        $data = $request->all();
+        $param = [];
+        if (!isset($data['refund_pay_type'])){
+            Form::dialog('返款记录')->error('qingxuanze '); // 新增成功后刷新页面
+
+
         }
+        $param['refund_pay_type'] = $data['refund_pay_type'];
+        $param['refund_at'] = $data['refund_at'];
+        $param['refund'] = $data['refund'];
+        $param['refund_mark'] = $data['refund_mark'];
+        $res = ReturnCarModel::where('id',$data['id'])->update($param);
+
+        if ($res){
+            admin_success('返款', '成功了');
+        }else{
+            admin_error('返款', '失败了');
+        }
+        $this->response()->refresh();
     }
 }

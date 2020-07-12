@@ -12,10 +12,12 @@ use App\Models\CarsServiceLogModel;
 use App\Models\RentCompanyModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Widgets\Table;
+use Dcat\Admin\Layout\Content;
 
 class CarsController extends AdminController
 {
@@ -29,6 +31,7 @@ class CarsController extends AdminController
     protected function grid()
     {
         return Grid::make(new Cars(), function (Grid $grid) {
+
             $grid->id->sortable();
             $grid->column('car_status','车辆状态')->using([0=>'空闲中',1=>'租赁中',2=>'维修中']);
             $grid->car_type->using(AdminIndustry::dataOptions(['id','title'],['parent_id'=>5]));
@@ -266,5 +269,25 @@ HTML
             }
         }
         return $data;
+    }
+
+
+    protected function iFrameGrid()
+    {
+        $grid = new IFrameGrid(new CarsModel());
+        $grid->model()->where('car_status', 0);
+        $grid->rowSelector()->titleColumn('car_num');
+        $grid->quickSearch(['id', 'car_num']);
+        $grid->id->sortable();
+        $grid->car_type->display(function ($item){
+            $type = AdminIndustry::where('id',$item)->first();
+            return $type['title'];
+        });
+        $grid->name->display(function ($item){
+            return $this->car_num;
+        });
+        $grid->created_at;
+
+        return $grid;
     }
 }

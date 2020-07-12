@@ -21,6 +21,7 @@ Route::group([
     $router->any('/getclient', 'ClientDetailController@getclient')->name('admin.client.getclient');
     $router->resource('/client', ClientDetailController::class);
     //汽车管理
+
     $router->any('/getcars', 'CarsController@getcars')->name('admin.cars.getcars');
     $router->resource('/cars', CarsController::class);
     //汽车保养日志
@@ -40,8 +41,11 @@ Route::group([
     //租金记录
     $router->resource('/rentcarslog', RentCarDeductionLogController::class);
     //还车记录
+    $router->any('/refundstore','ReturnCarController@refundstore')->name('admin.returncars.refundstore');
     $router->any('/refund','ReturnCarController@refund')->name('admin.returncars.refund');
     $router->resource('/returncars', ReturnCarController::class);
+    //编辑文件
+    $router->resource('/returncar', ReturnCarsController::class);
     //公司管理
     $router->resource('/companys', RentCompanyController::class);
     //违章管理
@@ -52,6 +56,9 @@ Route::group([
 
     //预支记录
     $router->resource('/getout', DriverGetoutLogController::class);
+
+    //预支记录
+    $router->resource('/transferlog', TransferLogController::class);
 
     $router->group([//用户管理
         'namespace' => 'Auth',

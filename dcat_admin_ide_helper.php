@@ -117,7 +117,6 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection wz_deposit
      * @property Grid\Column|Collection receivable
      * @property Grid\Column|Collection paid
-     * @property Grid\Column|Collection fixColumns
      * @property Grid\Column|Collection contact
      * @property Grid\Column|Collection phone
      * @property Grid\Column|Collection address
@@ -127,6 +126,12 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection advance_at
      * @property Grid\Column|Collection outs_at
      * @property Grid\Column|Collection oute_at
+     * @property Grid\Column|Collection mileages
+     * @property Grid\Column|Collection oils
+     * @property Grid\Column|Collection transfer_id
+     * @property Grid\Column|Collection transfer_mileage
+     * @property Grid\Column|Collection transfer_oils
+     * @property Grid\Column|Collection transfer_at
      * @property Grid\Column|Collection parent_id
      * @property Grid\Column|Collection order
      * @property Grid\Column|Collection icon
@@ -158,7 +163,10 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection exception
      * @property Grid\Column|Collection failed_at
      * @property Grid\Column|Collection secd_company
+     * @property Grid\Column|Collection pay_type
      * @property Grid\Column|Collection refund
+     * @property Grid\Column|Collection refund_at
+     * @property Grid\Column|Collection refund_pay_type
      * @property Grid\Column|Collection refund_mark
      * @property Grid\Column|Collection email
      * @property Grid\Column|Collection email_verified_at
@@ -269,7 +277,6 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection wz_deposit(string $label = null)
      * @method Grid\Column|Collection receivable(string $label = null)
      * @method Grid\Column|Collection paid(string $label = null)
-     * @method Grid\Column|Collection fixColumns(string $label = null)
      * @method Grid\Column|Collection contact(string $label = null)
      * @method Grid\Column|Collection phone(string $label = null)
      * @method Grid\Column|Collection address(string $label = null)
@@ -279,6 +286,12 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection advance_at(string $label = null)
      * @method Grid\Column|Collection outs_at(string $label = null)
      * @method Grid\Column|Collection oute_at(string $label = null)
+     * @method Grid\Column|Collection mileages(string $label = null)
+     * @method Grid\Column|Collection oils(string $label = null)
+     * @method Grid\Column|Collection transfer_id(string $label = null)
+     * @method Grid\Column|Collection transfer_mileage(string $label = null)
+     * @method Grid\Column|Collection transfer_oils(string $label = null)
+     * @method Grid\Column|Collection transfer_at(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
      * @method Grid\Column|Collection order(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
@@ -310,7 +323,10 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection exception(string $label = null)
      * @method Grid\Column|Collection failed_at(string $label = null)
      * @method Grid\Column|Collection secd_company(string $label = null)
+     * @method Grid\Column|Collection pay_type(string $label = null)
      * @method Grid\Column|Collection refund(string $label = null)
+     * @method Grid\Column|Collection refund_at(string $label = null)
+     * @method Grid\Column|Collection refund_pay_type(string $label = null)
      * @method Grid\Column|Collection refund_mark(string $label = null)
      * @method Grid\Column|Collection email(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
@@ -426,7 +442,6 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection wz_deposit
      * @property Show\Field|Collection receivable
      * @property Show\Field|Collection paid
-     * @property Show\Field|Collection fixColumns
      * @property Show\Field|Collection contact
      * @property Show\Field|Collection phone
      * @property Show\Field|Collection address
@@ -436,6 +451,12 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection advance_at
      * @property Show\Field|Collection outs_at
      * @property Show\Field|Collection oute_at
+     * @property Show\Field|Collection mileages
+     * @property Show\Field|Collection oils
+     * @property Show\Field|Collection transfer_id
+     * @property Show\Field|Collection transfer_mileage
+     * @property Show\Field|Collection transfer_oils
+     * @property Show\Field|Collection transfer_at
      * @property Show\Field|Collection parent_id
      * @property Show\Field|Collection order
      * @property Show\Field|Collection icon
@@ -467,7 +488,10 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection exception
      * @property Show\Field|Collection failed_at
      * @property Show\Field|Collection secd_company
+     * @property Show\Field|Collection pay_type
      * @property Show\Field|Collection refund
+     * @property Show\Field|Collection refund_at
+     * @property Show\Field|Collection refund_pay_type
      * @property Show\Field|Collection refund_mark
      * @property Show\Field|Collection email
      * @property Show\Field|Collection email_verified_at
@@ -578,7 +602,6 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection wz_deposit(string $label = null)
      * @method Show\Field|Collection receivable(string $label = null)
      * @method Show\Field|Collection paid(string $label = null)
-     * @method Show\Field|Collection fixColumns(string $label = null)
      * @method Show\Field|Collection contact(string $label = null)
      * @method Show\Field|Collection phone(string $label = null)
      * @method Show\Field|Collection address(string $label = null)
@@ -588,6 +611,12 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection advance_at(string $label = null)
      * @method Show\Field|Collection outs_at(string $label = null)
      * @method Show\Field|Collection oute_at(string $label = null)
+     * @method Show\Field|Collection mileages(string $label = null)
+     * @method Show\Field|Collection oils(string $label = null)
+     * @method Show\Field|Collection transfer_id(string $label = null)
+     * @method Show\Field|Collection transfer_mileage(string $label = null)
+     * @method Show\Field|Collection transfer_oils(string $label = null)
+     * @method Show\Field|Collection transfer_at(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
      * @method Show\Field|Collection order(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
@@ -619,7 +648,10 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection exception(string $label = null)
      * @method Show\Field|Collection failed_at(string $label = null)
      * @method Show\Field|Collection secd_company(string $label = null)
+     * @method Show\Field|Collection pay_type(string $label = null)
      * @method Show\Field|Collection refund(string $label = null)
+     * @method Show\Field|Collection refund_at(string $label = null)
+     * @method Show\Field|Collection refund_pay_type(string $label = null)
      * @method Show\Field|Collection refund_mark(string $label = null)
      * @method Show\Field|Collection email(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
