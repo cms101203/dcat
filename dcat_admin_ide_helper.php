@@ -132,6 +132,11 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection transfer_mileage
      * @property Grid\Column|Collection transfer_oils
      * @property Grid\Column|Collection transfer_at
+     * @property Grid\Column|Collection return_id
+     * @property Grid\Column|Collection tax_num
+     * @property Grid\Column|Collection point
+     * @property Grid\Column|Collection invoice_img
+     * @property Grid\Column|Collection kp_at
      * @property Grid\Column|Collection parent_id
      * @property Grid\Column|Collection order
      * @property Grid\Column|Collection icon
@@ -152,7 +157,6 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection pd_status
      * @property Grid\Column|Collection cly_status
      * @property Grid\Column|Collection car_status
-     * @property Grid\Column|Collection return_id
      * @property Grid\Column|Collection offset_car
      * @property Grid\Column|Collection offset_money
      * @property Grid\Column|Collection start_at
@@ -292,6 +296,11 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection transfer_mileage(string $label = null)
      * @method Grid\Column|Collection transfer_oils(string $label = null)
      * @method Grid\Column|Collection transfer_at(string $label = null)
+     * @method Grid\Column|Collection return_id(string $label = null)
+     * @method Grid\Column|Collection tax_num(string $label = null)
+     * @method Grid\Column|Collection point(string $label = null)
+     * @method Grid\Column|Collection invoice_img(string $label = null)
+     * @method Grid\Column|Collection kp_at(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
      * @method Grid\Column|Collection order(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
@@ -312,7 +321,6 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection pd_status(string $label = null)
      * @method Grid\Column|Collection cly_status(string $label = null)
      * @method Grid\Column|Collection car_status(string $label = null)
-     * @method Grid\Column|Collection return_id(string $label = null)
      * @method Grid\Column|Collection offset_car(string $label = null)
      * @method Grid\Column|Collection offset_money(string $label = null)
      * @method Grid\Column|Collection start_at(string $label = null)
@@ -457,6 +465,11 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection transfer_mileage
      * @property Show\Field|Collection transfer_oils
      * @property Show\Field|Collection transfer_at
+     * @property Show\Field|Collection return_id
+     * @property Show\Field|Collection tax_num
+     * @property Show\Field|Collection point
+     * @property Show\Field|Collection invoice_img
+     * @property Show\Field|Collection kp_at
      * @property Show\Field|Collection parent_id
      * @property Show\Field|Collection order
      * @property Show\Field|Collection icon
@@ -477,7 +490,6 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection pd_status
      * @property Show\Field|Collection cly_status
      * @property Show\Field|Collection car_status
-     * @property Show\Field|Collection return_id
      * @property Show\Field|Collection offset_car
      * @property Show\Field|Collection offset_money
      * @property Show\Field|Collection start_at
@@ -617,6 +629,11 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection transfer_mileage(string $label = null)
      * @method Show\Field|Collection transfer_oils(string $label = null)
      * @method Show\Field|Collection transfer_at(string $label = null)
+     * @method Show\Field|Collection return_id(string $label = null)
+     * @method Show\Field|Collection tax_num(string $label = null)
+     * @method Show\Field|Collection point(string $label = null)
+     * @method Show\Field|Collection invoice_img(string $label = null)
+     * @method Show\Field|Collection kp_at(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
      * @method Show\Field|Collection order(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
@@ -637,7 +654,6 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection pd_status(string $label = null)
      * @method Show\Field|Collection cly_status(string $label = null)
      * @method Show\Field|Collection car_status(string $label = null)
-     * @method Show\Field|Collection return_id(string $label = null)
      * @method Show\Field|Collection offset_car(string $label = null)
      * @method Show\Field|Collection offset_money(string $label = null)
      * @method Show\Field|Collection start_at(string $label = null)

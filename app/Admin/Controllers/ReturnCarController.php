@@ -8,6 +8,7 @@ use App\Models\CarsIllegalLogModel;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
 use App\Models\DriverDetailModel;
+use App\Models\InvoiceLogModel;
 use App\Models\RentCarModel;
 use App\Models\RentCompanyModel;
 use App\Models\ReturnCarModel;
@@ -174,11 +175,38 @@ class ReturnCarController extends AdminController
                 }
 
             });
+            $grid->column('invoice','发票记录')->display(function ($item)use ($grid){
+                return "<span class='invoice-form' data-url='invoicelog/create?id={$this->id}' title='新增发票记录'><i class='feather icon-clipboard'></i></span>";
+            })->expand(function ($model){
+                $byarr = [];
+                $bylist = InvoiceLogModel::where('return_id',$this->id)->get()->toArray();
+                if ($bylist){
+                    foreach ($bylist as $k=>$v){
+                        $byarr[$k]['tax_num'] = $v['tax_num'];
+                        $type = AdminIndustry::where('id',$v['type'])->first();
+                        $byarr[$k]['type']  = $type['title'];
+                        $byarr[$k]['title'] = $v['title'] ;
+                        $byarr[$k]['money'] = $v['money']." 元" ;
+                        $byarr[$k]['point'] = $v['point'];
+                        $byarr[$k]['kp_at'] = $v['kp_at'];
+                        $byarr[$k]['remark'] = $v['remark'] ;
+                    }
+                    return new Table(['税号','发票类型','抬头','金额','税点','开票时间','发票备注'],$byarr);
+                }
+
+            });
 
 
             Form::dialog('返款记录')
-                ->click('.edit-form') // 绑定点击按钮
-                ->url('returncar') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->click('.invoice-form') // 绑定点击按钮
+                ->url('invoicelog') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
+
+            Form::dialog('违章记录')
+                ->click('.create-form') // 绑定点击按钮
+                ->url('illegalog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
                 ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面

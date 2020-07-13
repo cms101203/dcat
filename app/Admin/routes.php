@@ -60,6 +60,9 @@ Route::group([
     //预支记录
     $router->resource('/transferlog', TransferLogController::class);
 
+    //发票记录
+    $router->resource('/invoicelog', InvoiceLogController::class);
+
     $router->group([//用户管理
         'namespace' => 'Auth',
     ], function($router) {
