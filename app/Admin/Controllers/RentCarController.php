@@ -6,6 +6,7 @@ use App\Admin\Repositories\RentCar;
 use App\Models\AdminIndustry;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
+use App\Models\CostLogModel;
 use App\Models\DriverDetailModel;
 use App\Models\DriverGetoutLogModel;
 use App\Models\RentCarAdvanceLogModel;
@@ -54,7 +55,7 @@ class RentCarController extends AdminController
             $grid->timeout_price->responsive(0);
             $grid->remark->responsive(0);
 
-            $grid->column('rentcarlog','租金记录')->display(function ($item)use ($grid){
+            $grid->column('rentcardeuction','租金记录')->display(function ($item)use ($grid){
                 return "<span class='create-form' data-url='rentcarslog/create?id={$this->id}' title='新增租金记录'><i class='fa  fa-cogs'></i></span>";
             })->expand(function ($model){
                 $byarr = [];
@@ -81,7 +82,6 @@ class RentCarController extends AdminController
                 $byarr = [];
                 $bylist = RentCarAdvanceLogModel::where('rent_id',$this->id)->orderBy('id', 'desc')->get(['money','advance_at','remark'])->toArray();
                 if (!empty($bylist)){
-
                     foreach ($bylist as $k=>$v){
                         $byarr[$k]['advance_at'] = $v['advance_at'];
                         $byarr[$k]['money'] = $v['money'];
@@ -92,8 +92,8 @@ class RentCarController extends AdminController
 
             });
 
-            $grid->column('advance','换车记录')->display(function ($item)use ($grid){
-                return "<span class='create-advance-form' data-url='transferlog/create?id={$this->id}&uid={$this->client_id}&cid={$this->car_id}' title='新增换车记录'><i class='feather icon-repeat'></i></span>";
+            $grid->column('transferlog','换车记录')->display(function ($item)use ($grid){
+                return "<span class='create-transferlog-form' data-url='transferlog/create?id={$this->id}&uid={$this->client_id}&cid={$this->car_id}' title='新增换车记录'><i class='feather icon-repeat'></i></span>";
             })->expand(function ($model){
                 $list = [];
                 $bylist = TransferLogModel::where('rent_id',$this->id)->orderBy('id', 'desc')->get()->toArray();
@@ -119,6 +119,7 @@ class RentCarController extends AdminController
                 }
 
             });
+
             $grid->column('returncar','还车')->display(function ($item)use($grid){
                 return "<a href='/admin/returncars/create?id=".$this->id."'>还车</a>";
             });
@@ -133,6 +134,13 @@ class RentCarController extends AdminController
             Form::dialog('新增租金记录')
                 ->click('.create-form') // 绑定点击按钮
                 ->url('rentcarslog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+                ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
+                ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
+                ->success('Dcat.reload()'); // 新增成功后刷新页面
+
+            Form::dialog('新增换车记录')
+                ->click('.create-transferlog-form') // 绑定点击按钮
+                ->url('transferlog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
                 ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
@@ -303,7 +311,47 @@ class RentCarController extends AdminController
                         $cars = CarsModel::where('id',$form->car_id)->first();
                         if ($cars){
                             RentCarModel::where('id',$form->id)->update(['secd_company'=>$cars['cp_id']]);
+                            //汽车借调
+                            $data = [];
+                            $data['data_id']   = $form->getKey();
+                            $data['rid']       = $form->getKey();
+                            $data['kid']       = $form->client_id;
+                            $data['cid']       = $form->car_id;
+                            $data['secd_company'] = $form->$cars['cp_id'];
+                            $data['type']      = CostLogModel::COST_SECD;
+                            $data['cost_type'] = 1;
+                            $data['money']     = -$form->secd_money;
+                            $data['cp_id']     = auth('admin')->user()->cp_id;
+                            $data['op_id']     = auth('admin')->user()->id;
+                            CostLogModel::costLog($data);
                         }
+                    }
+                    if (intval($form->deposit) > 0){
+                        //租赁押金
+                        $data = [];
+                        $data['data_id']   = $form->getKey();
+                        $data['rid']       = $form->getKey();
+                        $data['kid']       = $form->client_id;
+                        $data['type']      = CostLogModel::COST_DEPOSIT;
+                        $data['cost_type'] = 2;
+                        $data['money']     = $form->deposit;
+                        $data['cp_id']     = auth('admin')->user()->cp_id;
+                        $data['op_id']     = auth('admin')->user()->id;
+                        CostLogModel::costLog($data);
+                    }
+
+                    if (intval($form->rent) > 0){
+                        //租金租金
+                        $data = [];
+                        $data['data_id']   = $form->getKey();
+                        $data['rid']       = $form->getKey();
+                        $data['kid']       = $form->client_id;
+                        $data['type']      = CostLogModel::COST_RENT;
+                        $data['cost_type'] = 2;
+                        $data['money']     = $form->rent;
+                        $data['cp_id']     = auth('admin')->user()->cp_id;
+                        $data['op_id']     = auth('admin')->user()->id;
+                        CostLogModel::costLog($data);
                     }
                 }
                 if ($form->staff_id){

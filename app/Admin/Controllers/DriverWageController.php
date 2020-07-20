@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\DriverWage;
+use App\Models\CostLogModel;
 use App\Models\DriverDetailModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -111,8 +112,17 @@ class DriverWageController extends AdminController
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
 
-            $form->display('created_at');
-            $form->display('updated_at');
+            $form->saved(function ($form){
+                $data = [];
+                $data['data_id']   = $form->getKey();
+                $data['uid']       = $form->driver_id;
+                $data['type']      = CostLogModel::COST_WAGE;
+                $data['cost_type'] = 1;
+                $data['money']     = -$form->surplus;
+                $data['cp_id']     = auth('admin')->user()->cp_id;
+                $data['op_id']     = auth('admin')->user()->id;
+                CostLogModel::costLog($data);
+            });
         });
     }
 }

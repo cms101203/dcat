@@ -54,10 +54,10 @@ Route::group([
     //预支记录
     $router->resource('/advance', RentCarAdvanceLogController::class);
 
-    //预支记录
+    //出车记录
     $router->resource('/getout', DriverGetoutLogController::class);
 
-    //预支记录
+    //还车记录
     $router->resource('/transferlog', TransferLogController::class);
 
     //发票记录

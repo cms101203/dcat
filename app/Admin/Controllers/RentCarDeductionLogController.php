@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\RentCarDeductionLog;
+use App\Models\CostLogModel;
 use App\Models\RentCarModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -123,9 +124,21 @@ class RentCarDeductionLogController extends AdminController
             $form->date('next_at')->required();
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
-
-            $form->display('created_at');
-            $form->display('updated_at');
+            $form->saved(function ($form)use($rent){
+                if ($form->money){
+                    //租金租金
+                    $data = [];
+                    $data['data_id']   = $form->getKey();
+                    $data['rid']       = $form->rent_id;
+                    $data['kid']       = $rent->client_id;
+                    $data['type']      = CostLogModel::COST_DEDUCTION;
+                    $data['cost_type'] = 2;
+                    $data['money']     = $form->money;
+                    $data['cp_id']     = auth('admin')->user()->cp_id;
+                    $data['op_id']     = auth('admin')->user()->id;
+                    CostLogModel::costLog($data);
+                }
+            });
         });
     }
 }

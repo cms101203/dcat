@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\TransferLog;
 use App\Models\CarsModel;
+use App\Models\CostLogModel;
 use App\Models\RentCarModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -113,6 +114,21 @@ class TransferLogController extends AdminController
                     ]);
                 if ($res){
                     CarsModel::where('id',$form->transfer_id)->update(['car_status'=>0]);
+                    //汽车借调
+                    if ($form->secd_money){
+                        $data = [];
+                        $data['data_id']   = $form->getKey();
+                        $data['rid']       = $form->rent_id;
+                        $data['kid']       = $form->client_id;
+                        $data['cid']       = $form->car_id;
+                        $data['secd_company'] = $car['cp_id'];
+                        $data['type']      = CostLogModel::COST_SECD;
+                        $data['cost_type'] = 1;
+                        $data['money']     = -$form->secd_money;
+                        $data['cp_id']     = auth('admin')->user()->cp_id;
+                        $data['op_id']     = auth('admin')->user()->id;
+                        CostLogModel::costLog($data);
+                    }
                 }
             });
         });

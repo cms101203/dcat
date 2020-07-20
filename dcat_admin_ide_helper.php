@@ -137,6 +137,11 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection point
      * @property Grid\Column|Collection invoice_img
      * @property Grid\Column|Collection kp_at
+     * @property Grid\Column|Collection kid
+     * @property Grid\Column|Collection uid
+     * @property Grid\Column|Collection cid
+     * @property Grid\Column|Collection cost_type
+     * @property Grid\Column|Collection data_id
      * @property Grid\Column|Collection parent_id
      * @property Grid\Column|Collection order
      * @property Grid\Column|Collection icon
@@ -301,6 +306,11 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection point(string $label = null)
      * @method Grid\Column|Collection invoice_img(string $label = null)
      * @method Grid\Column|Collection kp_at(string $label = null)
+     * @method Grid\Column|Collection kid(string $label = null)
+     * @method Grid\Column|Collection uid(string $label = null)
+     * @method Grid\Column|Collection cid(string $label = null)
+     * @method Grid\Column|Collection cost_type(string $label = null)
+     * @method Grid\Column|Collection data_id(string $label = null)
      * @method Grid\Column|Collection parent_id(string $label = null)
      * @method Grid\Column|Collection order(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
@@ -470,6 +480,11 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection point
      * @property Show\Field|Collection invoice_img
      * @property Show\Field|Collection kp_at
+     * @property Show\Field|Collection kid
+     * @property Show\Field|Collection uid
+     * @property Show\Field|Collection cid
+     * @property Show\Field|Collection cost_type
+     * @property Show\Field|Collection data_id
      * @property Show\Field|Collection parent_id
      * @property Show\Field|Collection order
      * @property Show\Field|Collection icon
@@ -634,6 +649,11 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection point(string $label = null)
      * @method Show\Field|Collection invoice_img(string $label = null)
      * @method Show\Field|Collection kp_at(string $label = null)
+     * @method Show\Field|Collection kid(string $label = null)
+     * @method Show\Field|Collection uid(string $label = null)
+     * @method Show\Field|Collection cid(string $label = null)
+     * @method Show\Field|Collection cost_type(string $label = null)
+     * @method Show\Field|Collection data_id(string $label = null)
      * @method Show\Field|Collection parent_id(string $label = null)
      * @method Show\Field|Collection order(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)

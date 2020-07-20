@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Repositories\CarInsuranceLog;
 use App\Models\AdminIndustry;
 use App\Models\CarInsuranceLogModel;
+use App\Models\CostLogModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -103,6 +104,17 @@ class CarInsuranceLogController extends AdminController
         
             $form->display('created_at');
             $form->display('updated_at');
+            $form->saved(function ($form){
+                $data = [];
+                $data['data_id']   = $form->getKey();
+                $data['cid']       = $form->cars_id;
+                $data['type']      = CostLogModel::COST_INSURANCE;
+                $data['cost_type'] = 1;
+                $data['money']     = -$form->pay_money;
+                $data['cp_id']     = auth('admin')->user()->cp_id;
+                $data['op_id']     = auth('admin')->user()->id;
+                CostLogModel::costLog($data);
+            });
         });
     }
 }
