@@ -10,6 +10,8 @@ return [
         'remark'=>"保养备注",
         'cars_id'=>"相关车辆",
         'op_id' => '添加人',
+        'num'=>"第几次保养",
+        'money'=>"花费",
     ],
     'options' => [
     ],

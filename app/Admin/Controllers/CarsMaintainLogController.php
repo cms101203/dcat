@@ -95,6 +95,8 @@ class CarsMaintainLogController extends AdminController
             $form->currency('car_mileage')->symbol("Km")->saving(function ($v){
                 return str_replace(',','',$v);
             });
+            $form->number('num');
+            $form->number('money');
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
             $form->hidden('cars_id')->default($id);
