@@ -277,7 +277,6 @@ HTML
         $grid = new IFrameGrid(new CarsModel());
         $grid->model()->where('car_status', 0);
         $grid->rowSelector()->titleColumn('car_num');
-        $grid->quickSearch(['id', 'car_num']);
         $grid->id->sortable();
         $grid->car_type->display(function ($item){
             $type = AdminIndustry::where('id',$item)->first();
@@ -286,8 +285,11 @@ HTML
         $grid->name->display(function ($item){
             return $this->car_num;
         });
-        $grid->created_at;
+        $grid->filter(function (Grid\Filter $filter) {
+            $filter->equal('car_type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']));
+            $filter->equal('car_num');
 
+        });
         return $grid;
     }
 }

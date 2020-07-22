@@ -23,6 +23,9 @@ class CostLogModel extends Model
     const COST_RENT      = 7; //租赁租金
     const COST_DEDUCTION = 8; //单付租金
     const COST_ADVANCE   = 9; //预支记录
+    const COST_WZ_DEPOSIT= 10;//违章押金
+    const COST_PAID      = 11;//还车实收金额
+    const COST_REFUND    = 12;//还车返款
 
     const TYPE_SERVICE   = "汽车维修";
     const TYPE_INSURANCE = "汽车保险";
@@ -33,6 +36,10 @@ class CostLogModel extends Model
     const TYPE_RENT      = "租赁租金";
     const TYPE_DEDUCTION = "单付租金";
     const TYPE_ADVANCE   = "预支记录";
+    const TYPE_WZ_DEPOSIT= "违章押金";
+    const TYPE_PAID      = "还车实收金额";
+    const TYPE_REFUND    = "还车返款";
+
     
 
     public static function costLog($data){
@@ -45,7 +52,10 @@ class CostLogModel extends Model
             self::COST_DEPOSIT=>self::TYPE_DEPOSIT,
             self::COST_RENT=>self::TYPE_RENT,
             self::COST_DEDUCTION=>self::TYPE_DEDUCTION,
-            self::COST_ADVANCE=>self::TYPE_ADVANCE
+            self::COST_ADVANCE=>self::TYPE_ADVANCE,
+            self::COST_WZ_DEPOSIT=>self::COST_WZ_DEPOSIT,
+            self::COST_PAID=>self::TYPE_PAID,
+            self::COST_REFUND=>self::TYPE_REFUND
         ];
         $param = [];
         $param['kid']       = Arr::get($data,'kid',0);

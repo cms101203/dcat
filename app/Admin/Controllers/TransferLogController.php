@@ -82,9 +82,10 @@ class TransferLogController extends AdminController
             $form->display('id');
             $form->hidden('rent_id')->default($id);
             $form->hidden('client_id')->default($uid);
-//            $form->number('car_id')->required();
             $form->selectResource('car_id')
-                ->path('cars');
+                ->path('cars')
+                ->multiple(1) // 最多选择3个选项;
+                ->required();
             $form->radio('is_secd','借调')->options([0=>'否',1=>'是'])->default(0)->required();
             $form->number('secd_money','借调费')->default(0);
             $form->number('mileages')->required();

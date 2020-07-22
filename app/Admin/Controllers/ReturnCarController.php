@@ -7,6 +7,7 @@ use App\Models\AdminIndustry;
 use App\Models\CarsIllegalLogModel;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
+use App\Models\CostLogModel;
 use App\Models\DriverDetailModel;
 use App\Models\InvoiceLogModel;
 use App\Models\RentCarModel;
@@ -204,9 +205,9 @@ class ReturnCarController extends AdminController
                 ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
 
-            Form::dialog('违章记录')
-                ->click('.create-form') // 绑定点击按钮
-                ->url('illegalog/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
+            Form::dialog('添加返款')
+                ->click('.edit-form') // 绑定点击按钮
+                ->url('returncar/create') // 表单页面链接，此参数会被按钮中的 “data-url” 属性替换。。
                 ->width('700px') // 指定弹窗宽度，可填写百分比，默认 720px
                 ->height('550px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
@@ -296,9 +297,38 @@ class ReturnCarController extends AdminController
             $form->select('pay_type')->options([1=>'现金',2=>'银行卡',3=>'公对公',4=>'微信',5=>'支付宝']);
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
-
-            $form->display('created_at');
-            $form->display('updated_at');
+            $form->saved(function ($form){
+                if ($form->isCreating()) {
+                    if ($form->wz_deposit){
+                        //违章押金
+                        $data = [];
+                        $data['data_id']   = $form->getKey();
+                        $data['rid']       = $form->rent_id;
+                        $rent =RentCarModel::where('id',$form->rent_id)->first();
+                        $data['kid']       = $rent->client_id;
+                        $data['type']      = CostLogModel::COST_WZ_DEPOSIT;
+                        $data['cost_type'] = 2;
+                        $data['money']     = $form->wz_deposit;
+                        $data['cp_id']     = auth('admin')->user()->cp_id;
+                        $data['op_id']     = auth('admin')->user()->id;
+                        CostLogModel::costLog($data);
+                    }
+                    if ($form->paid){
+                        //还车实收金额
+                        $data = [];
+                        $data['data_id']   = $form->getKey();
+                        $data['rid']       = $form->rent_id;
+                        $rent =RentCarModel::where('id',$form->rent_id)->first();
+                        $data['kid']       = $rent->client_id;
+                        $data['type']      = CostLogModel::COST_PAID;
+                        $data['cost_type'] = 2;
+                        $data['money']     = $form->paid;
+                        $data['cp_id']     = auth('admin')->user()->cp_id;
+                        $data['op_id']     = auth('admin')->user()->id;
+                        CostLogModel::costLog($data);
+                    }
+                }
+            });
         });
     }
 

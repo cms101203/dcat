@@ -7,6 +7,7 @@ use App\Models\AdminIndustry;
 use App\Models\CarsIllegalLogModel;
 use App\Models\CarsModel;
 use App\Models\ClientDetailModel;
+use App\Models\CostLogModel;
 use App\Models\DriverDetailModel;
 use App\Models\RentCarModel;
 use App\Models\RentCompanyModel;
@@ -62,6 +63,25 @@ class ReturnCarsController extends AdminController
             $form->date('refund_at')->required();
             $form->number('refund')->required();
             $form->textarea('refund_mark');
+            $form->saved(function ($form){
+                $check = CostLogModel::where('type',CostLogModel::COST_REFUND)->where('data_id',$form->getKey())->first();
+                if ($check){
+                    CostLogModel::where('id',$check['id'])->update(['money'=>-$form->refund,'op_id'=>auth('admin')->user()->id]);
+                }else{
+                    //租金租金
+                    $data = [];
+                    $data['data_id']   = $form->getKey();
+                    $data['rid']       = $form->model()->rent_id;
+                    $rent = RentCarModel::where('id',$form->model()->rent_id)->first();
+                    $data['kid']       = $rent->client_id;
+                    $data['type']      = CostLogModel::COST_REFUND;
+                    $data['cost_type'] = 1;
+                    $data['money']     = -$form->refund;
+                    $data['cp_id']     = auth('admin')->user()->cp_id;
+                    $data['op_id']     = auth('admin')->user()->id;
+                    CostLogModel::costLog($data);
+                }
+            });
         });
     }
 }

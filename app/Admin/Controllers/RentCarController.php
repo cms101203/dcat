@@ -238,20 +238,23 @@ class RentCarController extends AdminController
             });
             $form->tel('mobile')->required();
 
-
-            $form->select('car_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>5]))->load('car_id', '/getcars')->required();
-            $form->select('car_id')->required();
+            $form->selectResource('car_id')
+                ->path('cars')->options(function ($item){
+                   return CarsModel::find($item[0])->pluck('car_num', 'id');
+                })
+                ->multiple(1) // 最多选择3个选项
+                ->required();
             $form->radio('is_secd')->options([0=>'否',1=>'是'])->default(0);
             $form->currency('secd_money')->symbol("元")->saving(function ($v){
                 return empty($v) ? 0 :  str_replace(',','',$v);
             });
             $form->radio('rent_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>19]))->default(20)->required();
             $form->select('staff_id')->options(DriverDetailModel::dataOptions(['id','name'],['staff_type'=>31]));
-            $form->datetime('outs_at');
+            $form->datetime('outs_at')->required();
             $form->datetime('oute_at');
             $form->datetime('rent_at')->default(date('Y-m-d H:i:s'));
             $form->radio('timexz','快捷选择预租天数')->options([1=>'一个月',2=>'一年']);
-            $form->number('rent_day')->default(1);
+            $form->number('rent_day')->default(1)->required();
             $form->currency('deposit')->symbol("元")->saving(function ($v){
                 return empty($v) ? 0 :  str_replace(',','',$v);
             });
@@ -280,6 +283,10 @@ class RentCarController extends AdminController
             $form->hidden('op_id')->default(auth('admin')->user()->id);
             $form->ignore('timexz');
             $form->saved(function ($form){
+                $car = CarsModel::find($form->car_id);
+                if ($car->car_type != $form->model()->car_type){
+                    RentCarModel::where('id',$form->getKey())->update(['car_type'=>$car->car_type]);
+                }
                 DriverDetailModel::where('id',$form->staff_id)->update(['driver_status'=>1]);
                 CarsModel::where('id',$form->car_id)->update(['car_status'=>1]);
                 if ($form->isCreating()){
