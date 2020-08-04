@@ -93,31 +93,59 @@ function getpai() {
     var pai = trimStr($(".car_input").text());
     $(".car_input").attr("data-pai", pai);
 }
-window.onload = function() {
-    $(".input_pro").click(function() {
-        console.log("2222");
+// window.onload = function() {
+//     $(".input_pro span").click(function() {
+//         console.log("443ee");
+//         layer.open({
+//             type: 1,
+//             content: '<div id="pro"></div>',
+//             anim: 'up',
+//             shade: false,
+//             style: 'position:fixed; top:500; left:0; width: 100%; height: auto; padding:0; border:none;'
+//         });
+//         showProvince()
+//     })
+//     $(".input_pp").click(function() {
+//         if ($(".input_pro span").hasClass("hasPro")) {
+//             console.log("3333");
+//             layer.open({
+//                 type: 1,
+//                 content: '<div id="pro"></div>',
+//                 anim: 'up',
+//                 shade: false,
+//                 style: 'position:fixed; top:500; left:0; width: 100%; height: auto; padding:0; border:none;'
+//             });
+//             showKeybord()
+//         } else {
+//             $(".input_pro span").click()
+//         }
+//     })
+// }
+$(function () {
+    $(".input_pro span").click(function() {
+        console.log("443ee");
         layer.open({
             type: 1,
             content: '<div id="pro"></div>',
             anim: 'up',
             shade: false,
-            style: 'position:fixed; bottom:100; left:0; width: 100%; height: auto; padding:0; border:none;'
+            style: 'position:fixed; top:500; left:0; width: 100%; height: auto; padding:0; border:none;'
         });
         showProvince()
     })
     $(".input_pp").click(function() {
-        if ($(".input_pro").hasClass("hasPro")) {
+        if ($(".input_pro span").hasClass("hasPro")) {
             console.log("3333");
             layer.open({
                 type: 1,
                 content: '<div id="pro"></div>',
                 anim: 'up',
                 shade: false,
-                style: 'position:fixed; bottom:0; left:0; width: 100%; height: auto; padding:0; border:none;'
+                style: 'position:fixed; top:500; left:0; width: 100%; height: auto; padding:0; border:none;'
             });
             showKeybord()
         } else {
-            $(".input_pro").click()
+            $(".input_pro span").click()
         }
     })
-}
+});

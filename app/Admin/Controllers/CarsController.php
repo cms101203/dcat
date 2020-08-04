@@ -207,18 +207,44 @@ class CarsController extends AdminController
             $form->display('updated_at');
 
 
-            Admin::script(
-                <<<SCRIPT
-$('.car_num').click(function () {
-     $('#myModal').modal('show');
-});
-$(".carnum_btn").click(function(){
-    layer.closeAll()
-    $('#myModal').modal('hide');
-    $(".car_num").val($(".input_pro").find("span").text()+$(".input_pp").find("span").text());
-    $(".car_num").blur();
-    
-});
+            Admin::script(<<<SCRIPT
+                $(document).ready(function () {
+                    $('.car_num').click(function () {
+                         $('#myModal').modal('show');
+                    });
+                    $(".carnum_btn").click(function(){
+                        layer.closeAll()
+                        $('#myModal').modal('hide');
+                        $(".car_num").val($(".input_pro").find("span").text()+$(".input_pp").find("span").text());
+                        $(".car_num").blur();
+                        
+                    });
+                    $(".input_pro span").click(function() {
+                        layer.open({
+                            type: 1,
+                            content: '<div id="pro"></div>',
+                            anim: 'up',
+                            shade: false,
+                            style: 'position:fixed; top:500; left:0; width: 100%; height: auto; padding:0; border:none;'
+                        });
+                        showProvince()
+                    })
+                    $(".input_pp").click(function() {
+                        if ($(".input_pro span").hasClass("hasPro")) {
+                            console.log("3333");
+                            layer.open({
+                                type: 1,
+                                content: '<div id="pro"></div>',
+                                anim: 'up',
+                                shade: false,
+                                style: 'position:fixed; top:500; left:0; width: 100%; height: auto; padding:0; border:none;'
+                            });
+                            showKeybord()
+                        } else {
+                            $(".input_pro span").click()
+                        }
+                    })
+                })
 SCRIPT
             );
             Admin::html(
