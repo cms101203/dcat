@@ -63,6 +63,9 @@ Route::group([
     //发票记录
     $router->resource('/invoicelog', InvoiceLogController::class);
 
+    //账务明细
+    $router->resource('/costlog', CostLogController::class);
+
     $router->group([//用户管理
         'namespace' => 'Auth',
     ], function($router) {

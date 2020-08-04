@@ -3,8 +3,15 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\CostLog;
+use App\Models\CarsModel;
+use App\Models\ClientDetailModel;
+use App\Models\CostLogModel;
+use App\Models\DriverDetailModel;
+use App\Models\StaffLeaveModel;
+use App\User;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Models\Administrator;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 
@@ -19,21 +26,39 @@ class CostLogController extends AdminController
     {
         return Grid::make(new CostLog(), function (Grid $grid) {
             $grid->id->sortable();
-            $grid->kid;
-            $grid->uid;
-            $grid->cid;
-            $grid->type;
-            $grid->cost_type;
+            $grid->kid->display(function ($item){
+                $client = ClientDetailModel::where('id',$item)->first();
+                return empty($client) ? '--' : $client['client_name'] ;
+            });
+            $grid->uid->display(function ($item){
+                $staff = DriverDetailModel::where('id',$item)->first();
+                return empty($staff) ? '--' : $staff['name'] ;
+            });
+            $grid->cid->display(function ($item){
+                $cars = CarsModel::where('id',$item)->first();
+                return empty($cars) ? '--' : $cars['car_num'] ;
+            });
+            $grid->type->display(function ($item){
+               return empty($item) ? '--' : CostLogModel::$typeArr[$item];
+            });
+            $grid->cost_type->using([1=>"扣费",2=>"收入"]);
             $grid->data_id;
             $grid->money;
             $grid->remark;
-            $grid->op_id;
+            $grid->op_id->display(function ($item){
+                $user = Administrator::where('id',$item)->first();
+                return empty($user) ? '--' : $user['name'];
+            });
             $grid->created_at;
-            $grid->updated_at->sortable();
-        
+            $grid->disableCreateButton();
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-        
+                $filter->equal('kid')->select(ClientDetailModel::dataOptions(['id','client_name']));
+                $filter->equal('uid')->select(DriverDetailModel::dataOptions(['id','name']));
+                $filter->equal('cid')->select(CarsModel::dataOptions(['id','car_num']));
+                $filter->equal('type')->select(CostLogModel::$typeArr);
+                $filter->equal('cost_type')->select([1=>"扣费",2=>"收入"]);
+                // 设置datetime类型
+                $filter->between('created_at')->date();
             });
         });
     }

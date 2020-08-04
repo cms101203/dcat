@@ -66,30 +66,33 @@ class CarsController extends AdminController
                 return "<span class='create-form' data-url='carsmaintainlog/create?id={$this->id}' title='新增保养记录'><i class='fa  fa-cogs'></i></span>";
             })->expand(function ($model){
                 $byarr = [];
-                $bylist = CarsMaintainLogModel::where('cars_id',$this->id)->get(['type','by_at','car_mileage']);
-                if ($bylist){
+                $bylist = CarsMaintainLogModel::where('cars_id',$this->id)->get(['type','by_at','car_mileage'])->toArray();
+
+                if (!empty($bylist)){
                     foreach ($bylist as $k=>$v){
                         $bytype = AdminIndustry::where('id',$v['type'])->first();
                         $byarr[$k]['by_at'] = $v['by_at'] ;
                         $byarr[$k]['car_mileage'] = $v['car_mileage']."/Km" ;
                         $byarr[$k]['type_name'] = empty($bytype) ? "--" : $bytype['title'] ;
                     }
+
+                    return new Table(['保养日期','保养时里程','保养类型'],$byarr);
                 }
-                return new Table(['保养日期','保养时里程','保养类型'],$byarr);
             });
             $grid->column('carservice','维修记录')->display(function($item)use($grid){
                 return "<span class='create-service-form' data-url='carservicelog/create?id={$this->id}' title='新增维修记录'><i class='fa fa-wrench'></i></span>";
             })->expand(function ($model){
                 $wxlist = CarsServiceLogModel::where('cars_id',$this->id)->get(['service_at','service_moeny','remark'])->toArray();
-
-                return new Table(['维修日期','维修花费','备注'],$wxlist);
+                if (!empty($wxlist)){
+                    return new Table(['维修日期','维修花费','备注'],$wxlist);
+                }
             });
             $grid->column('carsinsurance','保险记录')->display(function ($item)use ($grid){
                 return "<span class='create-insurance-form' data-url='carsinsurancelog/create?id={$this->id}' title='新增保险记录'><i class='feather icon-alert-triangle'></i></span>";
             })->expand(function ($model){
                 $byarr = [];
                 $bylist = CarInsuranceLogModel::where('cars_id',$this->id)->get(['type','pay_at','start_at','end_at','pay_money','remark'])->toArray();
-                if ($bylist){
+                if (!empty($bylist)){
                     foreach($bylist as $k=>$v){
                         $bytype = AdminIndustry::where('id',$v['type'])->first();
                         $byarr[$k]['type'] = empty($bytype) ? "--" : $bytype['title'] ;
@@ -98,7 +101,6 @@ class CarsController extends AdminController
                         $byarr[$k]['pay_money'] = $v['pay_money']."/元" ;
                         $byarr[$k]['remark'] = $v['remark'];
                     }
-
                     return new Table(['保险类型','缴纳时间','有效期','缴纳金额','备注'],$byarr);
                 }
             });
@@ -123,7 +125,9 @@ class CarsController extends AdminController
                 ->height('500px') // 指定弹窗高度，可填写百分比，默认 690px
                 ->success('Dcat.reload()'); // 新增成功后刷新页面
 
+
             $grid->withBorder();
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('car_type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']));

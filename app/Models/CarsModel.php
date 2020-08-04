@@ -20,9 +20,9 @@ class CarsModel extends BaseModel
         /**
          * 添加全局scope以自动过滤数据，如需排除请在->get()之前使用:->withoutGlobalScope(OpScope::class)
          */
-        $rolescope = new CompanyScope();
-        $rolescope->colName="op_id";
-        static::addGlobalScope($rolescope);
+//        $rolescope = new CompanyScope();
+//        $rolescope->colName="op_id";
+//        static::addGlobalScope($rolescope);
     }
     /**
      * Get options for Select field in form.
