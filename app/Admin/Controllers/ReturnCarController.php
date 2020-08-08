@@ -149,8 +149,10 @@ class ReturnCarController extends AdminController
                 }
             });
             $grid->column('illega','违章记录')->display(function ($item)use ($grid){
-                $rent = RentCarModel::where('id',$this->rent_id)->first();
-                return "<span class='create-form' data-url='illegalog/create?id={$this->id}&rid={$this->rent_id}&cid={$rent->car_id}&sid={$rent->staff_id}' title='新增违章记录'><i class='fa  fa-cogs'></i></span>";
+                if ($this->rent_id){
+                    $rent = RentCarModel::where('id',$this->rent_id)->first();
+                    return "<span class='create-form' data-url='illegalog/create?id={$this->id}&rid={$this->rent_id}&cid={$rent->car_id}&sid={$rent->staff_id}' title='新增违章记录'><i class='fa  fa-cogs'></i></span>";
+                }
             })->expand(function ($model){
                 $byarr = [];
                 $bylist = CarsIllegalLogModel::where('rent_id',$this->rent_id)->where('return_id',$this->id)->get()->toArray();

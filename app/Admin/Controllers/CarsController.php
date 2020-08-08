@@ -133,6 +133,7 @@ class CarsController extends AdminController
                 $filter->equal('car_type')->select(AdminIndustry::dataOptions(['id','title'],['parent_id'=>'5']));
                 $filter->equal('car_num');
                 $filter->equal('car_status','车辆状态')->select([0=>'空闲中',1=>'租赁中',2=>'维修中']);
+                $filter->equal('cp_id','所属公司')->select(RentCompanyModel::dataOptions(['id','title']));
                 $filter->between('inspection_at')->date();
                 $filter->between('created_at')->datetime();
 
