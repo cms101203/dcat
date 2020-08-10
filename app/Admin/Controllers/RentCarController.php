@@ -240,7 +240,9 @@ class RentCarController extends AdminController
 
             $form->selectResource('car_id')
                 ->path('cars')->options(function ($item){
-                   return CarsModel::find($item[0])->pluck('car_num', 'id');
+                    if ($item){
+                        return CarsModel::find($item[0])->pluck('car_num', 'id');
+                    }
                 })
                 ->multiple(1) // 最多选择3个选项
                 ->required();

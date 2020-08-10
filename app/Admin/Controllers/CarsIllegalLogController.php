@@ -23,6 +23,7 @@ class CarsIllegalLogController extends AdminController
     {
         return Grid::make(new CarsIllegalLog(), function (Grid $grid) {
             $grid->id->sortable();
+            $grid->combine();
             $grid->rent_id->using(RentCarModel::dataOptions(['id','rent_num']));
             $grid->car_id->using(CarsModel::dataOptions(['id','car_num']));
             $grid->staff_id->using(DriverDetailModel::dataOptions(['id','name']));
@@ -104,7 +105,7 @@ class CarsIllegalLogController extends AdminController
             });
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
-        
+
             $form->display('created_at');
             $form->display('updated_at');
         });
