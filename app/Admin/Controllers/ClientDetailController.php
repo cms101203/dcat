@@ -7,6 +7,7 @@ use App\Models\ClientDetailModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use App\Models\AdminIndustry;
 use Dcat\Admin\Controllers\AdminController;
 
 class ClientDetailController extends AdminController
@@ -22,6 +23,14 @@ class ClientDetailController extends AdminController
         return Grid::make(new ClientDetail(), function (Grid $grid) {
             $grid->id->sortable();
             $grid->client_name;
+            $grid->client_source->display(function ($item){
+                if ($item){
+                    $res = AdminIndustry::where('id',$item)->first();
+                    return $res['title'];
+                }else{
+                    return "--";
+                }
+            });
             $grid->client_mobile;
             $grid->client_wechat;
             $grid->client_qq;
@@ -85,6 +94,7 @@ class ClientDetailController extends AdminController
             $form->display('id');
             $form->text('client_name')->required();
             $form->text('client_mobile')->required();
+            $form->select('client_source',"客户来源")->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>10]));
             $form->text('client_wechat');
             $form->text('client_qq');
             $form->text('client_email');

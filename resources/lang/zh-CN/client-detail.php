@@ -5,6 +5,7 @@ return [
     ],
     'fields' => [
         'client_name' => '客户名',
+        'client_source' =>"客户来源",
         'client_mobile' => '客户联系方式',
         'client_wechat' => '客户微信',
         'client_qq' => '客户qq',
