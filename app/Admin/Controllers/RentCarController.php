@@ -252,9 +252,9 @@ class RentCarController extends AdminController
             });
             $form->radio('rent_type')->options(AdminIndustry::dataOptions(['id','title'],['parent_id'=>19]))->default(20)->required();
             $form->select('staff_id')->options(DriverDetailModel::dataOptions(['id','name'],['staff_type'=>31]));
-            $form->datetime('outs_at')->required();
+            $form->datetime('outs_at');
             $form->datetime('oute_at');
-            $form->datetime('rent_at')->default(date('Y-m-d H:i:s'));
+            $form->datetime('rent_at')->default(date('Y-m-d H:i:s'))->required();
             $form->radio('timexz','快捷选择预租天数')->options([1=>'一个月',2=>'一年']);
             $form->number('rent_day')->default(1)->required();
             $form->currency('deposit')->symbol("元")->saving(function ($v){
