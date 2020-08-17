@@ -300,7 +300,7 @@ class ReturnCarController extends AdminController
             $form->select('pay_type')->options([1=>'现金',2=>'银行卡',3=>'公对公',4=>'微信',5=>'支付宝']);
             $form->textarea('remark');
             $form->hidden('op_id')->default(auth('admin')->user()->id);
-            $form->saved(function ($form){
+            $form->saved(function ($form)use($id){
                 if ($form->isCreating()) {
                     if ($form->wz_deposit){
                         //违章押金
@@ -330,6 +330,8 @@ class ReturnCarController extends AdminController
                         $data['op_id']     = auth('admin')->user()->id;
                         CostLogModel::costLog($data);
                     }
+                    $rent = RentCarModel::where('id',$id)->first();
+                    CarsModel::where('id',$rent->car_id)->update(['car_status'=>0]);
                 }
             });
         });
